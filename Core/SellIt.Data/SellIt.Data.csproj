@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{E518B46B-B412-46B6-8CCD-FC6B4BF66831}</ProjectGuid>
+    <ProjectGuid>{3DD78182-2090-44AB-82DE-DAAA7B642CD6}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>SellIt.Services</RootNamespace>
-    <AssemblyName>SellIt.Services</AssemblyName>
+    <RootNamespace>SellIt.Data</RootNamespace>
+    <AssemblyName>SellIt.Data</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -39,6 +39,8 @@
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -47,25 +49,61 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Product\IProductService.cs" />
-    <Compile Include="Product\ProductService.cs" />
+    <Compile Include="IRepository.cs" />
+    <Compile Include="IUnitOfWork.cs" />
+    <Compile Include="Product.cs">
+      <DependentUpon>SellItDataContext.tt</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="User\IUserService.cs" />
-    <Compile Include="User\UserService.cs" />
+    <Compile Include="Repository.cs" />
+    <Compile Include="SellItDataContext.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>SellItDataContext.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SellItDataContext.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>SellItDataContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SellItDataContext.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>SellItDataContext.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="UnitOfWork.cs" />
+    <Compile Include="User.cs">
+      <DependentUpon>SellItDataContext.tt</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\SellIt.Data\SellIt.Data.csproj">
-      <Project>{3dd78182-2090-44ab-82de-daaa7b642cd6}</Project>
-      <Name>SellIt.Data</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\SellIt.Models\SellIt.Models.csproj">
-      <Project>{140030d4-e8db-422e-87a7-85450e993222}</Project>
-      <Name>SellIt.Models</Name>
-    </ProjectReference>
+    <EntityDeploy Include="SellItDataContext.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>SellItDataContext.Designer.cs</LastGenOutput>
+    </EntityDeploy>
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
+    <None Include="App.Config" />
     <None Include="packages.config" />
+    <None Include="SellItDataContext.edmx.diagram">
+      <DependentUpon>SellItDataContext.edmx</DependentUpon>
+    </None>
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="SellItDataContext.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>SellItDataContext.Context.cs</LastGenOutput>
+      <DependentUpon>SellItDataContext.edmx</DependentUpon>
+    </Content>
+    <Content Include="SellItDataContext.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>SellItDataContext.edmx</DependentUpon>
+      <LastGenOutput>SellItDataContext.cs</LastGenOutput>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
