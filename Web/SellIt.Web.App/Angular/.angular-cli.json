@@ -8,8 +8,7 @@
       "root": "src",
       "outDir": "dist",
       "assets": [
-        "assets",
-        "favicon.ico"
+        "assets"
       ],
       "index": "index.html",
       "main": "main.ts",
@@ -18,10 +17,22 @@
       "tsconfig": "tsconfig.app.json",
       "testTsconfig": "tsconfig.spec.json",
       "prefix": "app",
-      "styles": [
+      "styles": [        
+        "../node_modules/bootstrap/dist/css/bootstrap.min.css",
+        "../node_modules/font-awesome/css/font-awesome.css",
+        "../node_modules/now-ui-kit/assets/css/now-ui-kit.css",
         "styles.css"
+
       ],
-      "scripts": [],
+      "scripts": [
+        "../node_modules/jquery/dist/jquery.js",
+        "../node_modules/bootstrap/dist/js/bootstrap.min.js",        
+        "../node_modules/now-ui-kit/assets/js/core/popper.min.js",
+        "../node_modules/now-ui-kit/assets/js/plugins/nouislider.min.js",
+        "../node_modules/now-ui-kit/assets/js/plugins/bootstrap-datepicker.js",
+        "../node_modules/now-ui-kit/assets/js/plugins/bootstrap-switch.js",
+        "../node_modules/now-ui-kit/assets/js/now-ui-kit.js"
+      ],
       "environmentSource": "environments/environment.ts",
       "environments": {
         "dev": "environments/environment.ts",
