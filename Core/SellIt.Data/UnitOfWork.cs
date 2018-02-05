@@ -15,7 +15,11 @@ namespace SellIt.Data
 
         private IRepository<User> _users;
 
-        private IRepository<Product> _products;
+        private IRepository<Advertisement> _advertisements;
+
+        private IRepository<CarAdvertisement> _carAdvertisements;
+
+        private IRepository<PhoneAdvertisement> _phoneAdvertisements;
 
         #endregion
 
@@ -23,7 +27,11 @@ namespace SellIt.Data
 
         public IRepository<User> Users => _users ?? (_users = new Repository<User>(_context));
 
-        public IRepository<Product> Products => _products ?? (_products = new Repository<Product>(_context));
+        public IRepository<Advertisement> Advertisements => _advertisements ?? (_advertisements = new Repository<Advertisement>(_context));
+
+        public IRepository<CarAdvertisement> CarAdvertisements => _carAdvertisements ?? (_carAdvertisements = new Repository<CarAdvertisement>(_context));
+
+        public IRepository<PhoneAdvertisement> PhoneAdvertisements => _phoneAdvertisements ?? (_phoneAdvertisements = new Repository<PhoneAdvertisement>(_context));
 
         #endregion
 

@@ -49,9 +49,18 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Advertisement.cs">
+      <DependentUpon>SellItDataContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="AdvertisementImage.cs">
+      <DependentUpon>SellItDataContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CarAdvertisement.cs">
+      <DependentUpon>SellItDataContext.tt</DependentUpon>
+    </Compile>
     <Compile Include="IRepository.cs" />
     <Compile Include="IUnitOfWork.cs" />
-    <Compile Include="Product.cs">
+    <Compile Include="PhoneAdvertisement.cs">
       <DependentUpon>SellItDataContext.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />

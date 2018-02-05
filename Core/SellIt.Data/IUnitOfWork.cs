@@ -7,7 +7,11 @@ namespace SellIt.Data
     {
         IRepository<User> Users { get; }
 
-        IRepository<Product> Products { get; }
+        IRepository<Advertisement> Advertisements { get; }
+
+        IRepository<CarAdvertisement> CarAdvertisements { get; }
+
+        IRepository<PhoneAdvertisement> PhoneAdvertisements { get; }
 
         Task<int> SaveAsync();
     }

@@ -6,6 +6,6 @@
 
     public interface IUserService
     {
-        Task<List<UserDto>> GetAllUsers();
+        Task CreateUser(CreateUserRequest request);
     }
 }

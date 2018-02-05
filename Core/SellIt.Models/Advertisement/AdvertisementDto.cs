@@ -1,8 +1,8 @@
 ﻿using System;
 
-namespace SellIt.Models.User
+namespace SellIt.Models.Advertisement
 {
-    public class UserDto
+    public class AdvertisementDto
     {
         public Guid Uid { get; set; }
 
@@ -10,8 +10,7 @@ namespace SellIt.Models.User
 
         public DateTime? DeletedOn { get; set; }
 
-        public string FirstName { get; set; }
-
-        public string LastName { get; set; }
+        public AdvertisementCategory AdvertisementCategory { get; set; }
     }
 }
+ 

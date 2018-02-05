@@ -1,5 +1,4 @@
-﻿using SellIt.Models.Product;
-using SellIt.Models.User;
+﻿using SellIt.Models.User;
 using SellIt.Services.User;
 using System;
 using System.Collections.Generic;
@@ -21,12 +20,19 @@ namespace SellIt.Web.API.Controllers
             _userService = userService;
         }
 
-        [HttpGet]
+        [HttpPost]
         [Route("")]
-        public async Task<List<UserDto>> GetUsers()
+        public async Task CreateUser([FromBody]CreateUserRequest request)
         {
-            List<UserDto> users = await _userService.GetAllUsers();
-            return users;
+            await _userService.CreateUser(request);
         }
+
+        //[HttpGet]
+        //[Route("")]
+        //public async Task<List<UserDto>> GetUsers()
+        //{
+        //    List<UserDto> users = await _userService.GetAllUsers();
+        //    return users;
+        //}
     }
 }

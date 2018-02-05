@@ -14,6 +14,7 @@ namespace SellIt.Web.API.App_Start
     using Ninject.Web.Common;
     using Ninject.Web.Common.WebHost;
     using SellIt.Data;
+    using SellIt.Services.Advertisement;
     using SellIt.Services.User;
     using WebApiContrib.IoC.Ninject;
 
@@ -74,6 +75,7 @@ namespace SellIt.Web.API.App_Start
             }).InRequestScope();
 
             kernel.Bind<IUserService>().To<UserService>().InRequestScope();
+            kernel.Bind<IAdvertisementService>().To<AdvertisementService>().InRequestScope();
 
             System.Web.Http.GlobalConfiguration.Configuration.DependencyResolver = new NinjectResolver(kernel);
         }

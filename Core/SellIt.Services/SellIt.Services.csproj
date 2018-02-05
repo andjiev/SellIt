@@ -47,8 +47,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Product\IProductService.cs" />
-    <Compile Include="Product\ProductService.cs" />
+    <Compile Include="Advertisement\IAdvertisementService.cs" />
+    <Compile Include="Advertisement\AdvertisementService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="User\IUserService.cs" />
     <Compile Include="User\UserService.cs" />

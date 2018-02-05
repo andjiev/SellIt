@@ -12,9 +12,12 @@ namespace SellIt.Data
     using System;
     using System.Collections.Generic;
     
-    public partial class Product
+    public partial class AdvertisementImage
     {
         public int Id { get; set; }
-        public string ProductName { get; set; }
+        public byte[] ImageContent { get; set; }
+        public int AdvertisementFk { get; set; }
+    
+        public virtual Advertisement Advertisement { get; set; }
     }
 }

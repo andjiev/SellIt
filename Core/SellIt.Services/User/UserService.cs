@@ -1,15 +1,14 @@
-﻿using SellIt.Data;
-using SellIt.Models.Product;
-using SellIt.Models.User;
-using System;
-using System.Collections.Generic;
-using System.Data.Entity;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace SellIt.Services.User
+﻿namespace SellIt.Services.User
 {
+    using SellIt.Data;
+    using SellIt.Models.User;
+    using System;
+    using System.Collections.Generic;
+    using System.Data.Entity;
+    using System.Linq;
+    using System.Text;
+    using System.Threading.Tasks;
+
     public class UserService : IUserService
     {
         public readonly IUnitOfWork _unitOfWork;
@@ -19,17 +18,18 @@ namespace SellIt.Services.User
             _unitOfWork = unitOfWork;
         }
 
-        public async Task<List<UserDto>> GetAllUsers()
+        public async Task CreateUser(CreateUserRequest request)
         {
-            List<UserDto> users = await _unitOfWork.Users.All()
-                .Select(x => new UserDto
-                {
-                    Id = x.Id,
-                    FirstName = x.FirstName,
-                    LastName = x.LastName
-                }).ToListAsync();
+            User user = new User
+            {
+                Uid = Guid.NewGuid(),
+                CreatedOn = DateTime.Now,
+                FirstName = request.FirstName,
+                LastName = request.LastName
+            };
 
-            return users;
+            _unitOfWork.Users.Insert(user);
+            await _unitOfWork.SaveAsync();
         }
     }
 }
