@@ -18,18 +18,23 @@
             _unitOfWork = unitOfWork;
         }
 
-        public async Task CreateUser(CreateUserRequest request)
+        public async Task<Guid> CreateUser(CreateUserRequest request)
         {
             User user = new User
             {
                 Uid = Guid.NewGuid(),
                 CreatedOn = DateTime.Now,
-                FirstName = request.FirstName,
-                LastName = request.LastName
+                Name = request.Name,
+                Email = request.Email,
+                Password = request.Password,
+                City = request.City,
+                Phone = request.Phone
             };
 
             _unitOfWork.Users.Insert(user);
             await _unitOfWork.SaveAsync();
+
+            return user.Uid;
         }
     }
 }

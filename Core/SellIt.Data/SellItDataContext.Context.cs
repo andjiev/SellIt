@@ -25,10 +25,10 @@ namespace SellIt.Data
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<User> Users { get; set; }
         public virtual DbSet<CarAdvertisement> CarAdvertisements { get; set; }
         public virtual DbSet<Advertisement> Advertisements { get; set; }
         public virtual DbSet<PhoneAdvertisement> PhoneAdvertisements { get; set; }
         public virtual DbSet<AdvertisementImage> AdvertisementImages { get; set; }
+        public virtual DbSet<User> Users { get; set; }
     }
 }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http.Headers;
 using System.Web.Http;
+using System.Web.Http.Cors;
 
 namespace SellIt.Web.API
 {
@@ -14,6 +15,9 @@ namespace SellIt.Web.API
 
             // Web API routes
             config.MapHttpAttributeRoutes();
+
+            EnableCorsAttribute cors = new EnableCorsAttribute("http://localhost:4200", "*", "*");
+            config.EnableCors(cors);
 
             config.Routes.MapHttpRoute(
                 name: "DefaultApi",

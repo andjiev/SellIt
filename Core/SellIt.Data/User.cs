@@ -24,8 +24,11 @@ namespace SellIt.Data
         public System.Guid Uid { get; set; }
         public System.DateTime CreatedOn { get; set; }
         public Nullable<System.DateTime> DeletedOn { get; set; }
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
+        public string Name { get; set; }
+        public string Email { get; set; }
+        public string Password { get; set; }
+        public string City { get; set; }
+        public string Phone { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Advertisement> Advertisements { get; set; }

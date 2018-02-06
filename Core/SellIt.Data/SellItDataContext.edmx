@@ -48,8 +48,11 @@
           <Property Name="Uid" Type="uniqueidentifier" Nullable="false" />
           <Property Name="CreatedOn" Type="datetime" Nullable="false" />
           <Property Name="DeletedOn" Type="datetime" />
-          <Property Name="FirstName" Type="varchar" MaxLength="50" />
-          <Property Name="LastName" Type="varchar" MaxLength="50" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Email" Type="varchar" MaxLength="30" Nullable="false" />
+          <Property Name="Password" Type="varchar" MaxLength="30" Nullable="false" />
+          <Property Name="City" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Phone" Type="varchar" MaxLength="30" Nullable="false" />
         </EntityType>
         <Association Name="FK_Advertisement_User">
           <End Role="User" Type="Self.User" Multiplicity="1" />
@@ -129,13 +132,8 @@
     <edmx:ConceptualModels>
       <Schema Namespace="SellItModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityContainer Name="SellItDbContext" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="Users" EntityType="SellItModel.User" />
           <EntitySet Name="CarAdvertisements" EntityType="SellItModel.CarAdvertisement" />
           <EntitySet Name="Advertisements" EntityType="SellItModel.Advertisement" />
-          <AssociationSet Name="FK_Advertisement_User" Association="SellItModel.FK_Advertisement_User">
-            <End Role="User" EntitySet="Users" />
-            <End Role="Advertisement" EntitySet="Advertisements" />
-          </AssociationSet>
           <AssociationSet Name="FK_CarAdvertisement_Advertisement" Association="SellItModel.FK_CarAdvertisement_Advertisement">
             <End Role="Advertisement" EntitySet="Advertisements" />
             <End Role="CarAdvertisement" EntitySet="CarAdvertisements" />
@@ -150,19 +148,12 @@
             <End Role="Advertisement" EntitySet="Advertisements" />
             <End Role="AdvertisementImage" EntitySet="AdvertisementImages" />
           </AssociationSet>
+          <EntitySet Name="Users" EntityType="SellItModel.User" />
+          <AssociationSet Name="FK_Advertisement_User" Association="SellItModel.FK_Advertisement_User">
+            <End Role="User" EntitySet="Users" />
+            <End Role="Advertisement" EntitySet="Advertisements" />
+          </AssociationSet>
         </EntityContainer>
-        <EntityType Name="User">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Uid" Type="Guid" Nullable="false" />
-          <Property Name="CreatedOn" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="DeletedOn" Type="DateTime" Precision="3" />
-          <Property Name="FirstName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="LastName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="Advertisements" Relationship="SellItModel.FK_Advertisement_User" FromRole="User" ToRole="Advertisement" />
-        </EntityType>
         <EntityType Name="CarAdvertisement">
           <Key>
             <PropertyRef Name="Id" />
@@ -182,23 +173,11 @@
           <Property Name="DeletedOn" Type="DateTime" Precision="3" />
           <Property Name="UserFk" Type="Int32" Nullable="false" />
           <Property Name="Category" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="User" Relationship="SellItModel.FK_Advertisement_User" FromRole="Advertisement" ToRole="User" />
           <NavigationProperty Name="CarAdvertisements" Relationship="SellItModel.FK_CarAdvertisement_Advertisement" FromRole="Advertisement" ToRole="CarAdvertisement" />
           <NavigationProperty Name="PhoneAdvertisements" Relationship="SellItModel.FK_PhoneAdvertisement_Advertisement" FromRole="Advertisement" ToRole="PhoneAdvertisement" />
           <NavigationProperty Name="AdvertisementImages" Relationship="SellItModel.FK_AdvertisementImage_Advertisement" FromRole="Advertisement" ToRole="AdvertisementImage" />
+          <NavigationProperty Name="User" Relationship="SellItModel.FK_Advertisement_User" FromRole="Advertisement" ToRole="User" />
         </EntityType>
-        <Association Name="FK_Advertisement_User">
-          <End Type="SellItModel.User" Role="User" Multiplicity="1" />
-          <End Type="SellItModel.Advertisement" Role="Advertisement" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="User">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Advertisement">
-              <PropertyRef Name="UserFk" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_CarAdvertisement_Advertisement">
           <End Type="SellItModel.Advertisement" Role="Advertisement" Multiplicity="1" />
           <End Type="SellItModel.CarAdvertisement" Role="CarAdvertisement" Multiplicity="*" />
@@ -255,24 +234,39 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Uid" Type="Guid" Nullable="false" />
+          <Property Name="CreatedOn" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="DeletedOn" Type="DateTime" Precision="3" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Email" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="Password" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="City" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Phone" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Advertisements" Relationship="SellItModel.FK_Advertisement_User" FromRole="User" ToRole="Advertisement" />
+        </EntityType>
+        <Association Name="FK_Advertisement_User">
+          <End Type="SellItModel.User" Role="User" Multiplicity="1" />
+          <End Type="SellItModel.Advertisement" Role="Advertisement" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Advertisement">
+              <PropertyRef Name="UserFk" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
     <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
   <EntityContainerMapping StorageEntityContainer="StoreContainer" CdmEntityContainer="SellItDbContext" >
-          <EntitySetMapping Name="Users">
-            <EntityTypeMapping TypeName="SellItModel.User">
-              <MappingFragment StoreEntitySet="User">
-                <ScalarProperty Name="LastName" ColumnName="LastName" />
-                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
-                <ScalarProperty Name="DeletedOn" ColumnName="DeletedOn" />
-                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
-                <ScalarProperty Name="Uid" ColumnName="Uid" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="CarAdvertisements">
             <EntityTypeMapping TypeName="SellItModel.CarAdvertisement">
               <MappingFragment StoreEntitySet="CarAdvertisement">
@@ -308,6 +302,21 @@
               <MappingFragment StoreEntitySet="AdvertisementImage">
                 <ScalarProperty Name="AdvertisementFk" ColumnName="AdvertisementFk" />
                 <ScalarProperty Name="ImageContent" ColumnName="ImageContent" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Users">
+            <EntityTypeMapping TypeName="SellItModel.User">
+              <MappingFragment StoreEntitySet="User">
+                <ScalarProperty Name="Phone" ColumnName="Phone" />
+                <ScalarProperty Name="City" ColumnName="City" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="DeletedOn" ColumnName="DeletedOn" />
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="Uid" ColumnName="Uid" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>

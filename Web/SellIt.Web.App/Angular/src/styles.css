@@ -5,3 +5,7 @@ body {
     margin: 0;
     background-color: #eee !important;
 }
+
+.cursor-pointer {
+    cursor: pointer;
+}

@@ -22,17 +22,10 @@ namespace SellIt.Web.API.Controllers
 
         [HttpPost]
         [Route("")]
-        public async Task CreateUser([FromBody]CreateUserRequest request)
+        public async Task<Guid> CreateUser([FromBody]CreateUserRequest request)
         {
-            await _userService.CreateUser(request);
+            Guid response = await _userService.CreateUser(request);
+            return response;
         }
-
-        //[HttpGet]
-        //[Route("")]
-        //public async Task<List<UserDto>> GetUsers()
-        //{
-        //    List<UserDto> users = await _userService.GetAllUsers();
-        //    return users;
-        //}
     }
 }
