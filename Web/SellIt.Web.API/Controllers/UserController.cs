@@ -24,8 +24,16 @@ namespace SellIt.Web.API.Controllers
         [Route("")]
         public async Task<Guid> CreateUser([FromBody]CreateUserRequest request)
         {
-            Guid response = await _userService.CreateUser(request);
-            return response;
+            Guid userUid = await _userService.CreateUser(request);
+            return userUid;
+        }
+
+        [HttpPost]
+        [Route("login")]
+        public async Task<Guid> LoginUser([FromBody]LoginUserRequest request)
+        {
+            Guid authToken = await _userService.LoginUser(request);
+            return authToken;
         }
     }
 }

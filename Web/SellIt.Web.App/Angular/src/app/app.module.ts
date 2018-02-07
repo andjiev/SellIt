@@ -1,3 +1,4 @@
+import { AuthService } from './services/auth.service';
 import { ApiService } from './services/api.service';
 import { ROUTES } from './app.routes';
 import { RouterModule } from '@angular/router';
@@ -14,6 +15,7 @@ import { ProfileComponent } from './components/profile/profile.component';
 import { AdvertCreationComponent } from './components/advert/advert-creation.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
+import { AuthModule } from 'angular2-auth';
 
 @NgModule({
   declarations: [
@@ -31,10 +33,12 @@ import { HttpClientModule } from '@angular/common/http';
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
+    AuthModule.forRoot(),
     RouterModule.forRoot(ROUTES)
   ],
   providers: [
-    ApiService
+    ApiService,
+    AuthService
   ],
   bootstrap: [AppComponent]
 })

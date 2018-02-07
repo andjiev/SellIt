@@ -53,8 +53,10 @@
     <Compile Include="Advertisement\CarAdvertisementDto.cs" />
     <Compile Include="Advertisement\CarAdvertisementRequest.cs" />
     <Compile Include="Advertisement\PhoneAdvertisementRequest.cs" />
+    <Compile Include="CurrentUser\CurrentUser.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="User\CreateUserRequest.cs" />
+    <Compile Include="User\LoginUserRequest.cs" />
     <Compile Include="User\UserDto.cs" />
   </ItemGroup>
   <ItemGroup>

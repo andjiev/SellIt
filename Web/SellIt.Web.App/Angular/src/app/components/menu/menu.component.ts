@@ -1,3 +1,4 @@
+import { AuthService } from './../../services/auth.service';
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 
@@ -8,7 +9,12 @@ import { Router } from '@angular/router';
 })
 export class MenuComponent {
 
-    constructor(private router: Router) { }
+    constructor(private router: Router,
+        private authService: AuthService) { }
+
+    isLoggedIn(): boolean {
+        return this.authService.isloggedIn();
+    }
 
     navigateToProfile(): void {
         this.router.navigate(['/profile']);
@@ -19,6 +25,6 @@ export class MenuComponent {
     }
 
     navigateToNewAdvert(): void {
-       this.router.navigate(['/adverts/new']);
+        this.router.navigate(['/adverts/new']);
     }
 }

@@ -1,3 +1,4 @@
+import { AuthService } from './../../services/auth.service';
 import { Router } from '@angular/router';
 import { ApiService } from './../../services/api.service';
 import { Component, OnInit } from '@angular/core';
@@ -26,7 +27,8 @@ export class ProfileComponent {
 
   constructor(private formBuilder: FormBuilder,
     private apiService: ApiService,
-    private router: Router
+    private router: Router,
+    private authService: AuthService
   ) {
     this.loginFormGroup = formBuilder.group({
       email: [''],
@@ -54,6 +56,7 @@ export class ProfileComponent {
         password: this.loginFormGroup.controls['password'].value
       };
 
+      this.authService.login(request);
     }
     if (!this.isLogin && this.signUpFormGroup.valid) {
 

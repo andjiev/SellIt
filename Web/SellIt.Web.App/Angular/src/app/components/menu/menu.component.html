@@ -24,7 +24,12 @@
                         Нов оглас
                     </a>
                 </li>
-                <li class="dropdown nav-item">
+                <li *ngIf="isLoggedIn()">
+                    <a class="nav-link cursor-pointer" (click)="navigateToNewAdvert()">
+                        Најава
+                    </a>
+                </li>
+                <li *ngIf="!isLoggedIn()" class="dropdown nav-item">
                     <a href="#pablo" class="btn btn-rose btn-raised btn-fab btn-round" data-toggle="dropdown">
                         <i class="fa fa-user"></i>
                     </a>

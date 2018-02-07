@@ -1,5 +1,5 @@
 import { map } from 'rxjs/operators';
-import { ICreateUserRequest } from './../models/models';
+import { ICreateUserRequest, ILoginUserRequest } from './../models/models';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
@@ -11,6 +11,11 @@ export class ApiService {
 
     createUser(request: ICreateUserRequest): Observable<string> {
         const url = this.getUrl('users');
+        return this.httpService.post<string>(url, request);
+    }
+
+    loginUser(request: ILoginUserRequest): Observable<string> {
+        const url = this.getUrl('users/login');
         return this.httpService.post<string>(url, request);
     }
 

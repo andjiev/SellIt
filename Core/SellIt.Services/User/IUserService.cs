@@ -8,5 +8,7 @@
     public interface IUserService
     {
         Task<Guid> CreateUser(CreateUserRequest request);
+
+        Task<Guid> LoginUser(LoginUserRequest request);
     }
 }

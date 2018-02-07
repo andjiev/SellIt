@@ -6,6 +6,7 @@
     using System.Collections.Generic;
     using System.Data.Entity;
     using System.Linq;
+    using System.Runtime.Caching;
     using System.Text;
     using System.Threading.Tasks;
 
@@ -33,6 +34,27 @@
 
             _unitOfWork.Users.Insert(user);
             await _unitOfWork.SaveAsync();
+
+            return user.Uid;
+        }
+
+        public async Task<Guid> LoginUser(LoginUserRequest request)
+        {
+
+            User user = await _unitOfWork.Users.All()
+                .FirstOrDefaultAsync(x => x.Email == request.Email && x.Password == request.Password);
+
+            if (user == null)
+            {
+                throw new Exception();
+            }
+
+            CacheItemPolicy policy = new CacheItemPolicy
+            {
+                AbsoluteExpiration = DateTimeOffset.Now.AddMinutes(30)
+            };
+
+            MemoryCache.Default.Set($"currentUser", user, policy);
 
             return user.Uid;
         }
