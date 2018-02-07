@@ -3,6 +3,7 @@ import { ProfileComponent } from './components/profile/profile.component';
 import { AdvertComponent } from './components/advert/advert.component';
 import { Routes } from '@angular/router';
 import { LayoutComponent } from './components/layout/layout.component';
+import { AdvertDetailsComponent } from './components/advert/advert-details.component';
 
 export const ROUTES: Routes = [
     { path: '', redirectTo: 'adverts', pathMatch: 'full' },
@@ -18,6 +19,10 @@ export const ROUTES: Routes = [
             {
                 path: 'adverts/new',
                 component: AdvertCreationComponent
+            },
+            {
+                path: 'adverts/details',
+                component: AdvertDetailsComponent
             },
             {
                 path: 'profile',

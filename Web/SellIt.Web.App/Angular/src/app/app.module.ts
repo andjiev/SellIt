@@ -16,6 +16,9 @@ import { AdvertCreationComponent } from './components/advert/advert-creation.com
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { AuthModule } from 'angular2-auth';
+import { Angular2TokenService } from 'angular2-token';
+import { NgxGalleryModule } from 'ngx-gallery';
+import { AdvertDetailsComponent } from './components/advert/advert-details.component';
 
 @NgModule({
   declarations: [
@@ -24,7 +27,8 @@ import { AuthModule } from 'angular2-auth';
     LayoutComponent,
     AdvertComponent,
     ProfileComponent,
-    AdvertCreationComponent
+    AdvertCreationComponent,
+    AdvertDetailsComponent
   ],
   imports: [
     BrowserModule,
@@ -33,12 +37,14 @@ import { AuthModule } from 'angular2-auth';
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
+    NgxGalleryModule,
     AuthModule.forRoot(),
     RouterModule.forRoot(ROUTES)
   ],
   providers: [
     ApiService,
-    AuthService
+    Angular2TokenService,
+    AuthService,
   ],
   bootstrap: [AppComponent]
 })

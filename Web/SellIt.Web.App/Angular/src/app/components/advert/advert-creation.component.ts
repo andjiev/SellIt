@@ -7,6 +7,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AdvertCreationComponent implements OnInit {
 
+  //public config: DropzoneConfigInterface = {
+  //  url: 'https://httpbin.org/post',
+  //  maxFiles: 10,
+  //  uploadMultiple: true,
+  //  clickable: true,
+  //  acceptedFiles: 'image/*',
+  //  createImageThumbnails: true
+  //};
+
   constructor() { }
 
   ngOnInit() {

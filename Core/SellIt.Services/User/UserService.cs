@@ -5,6 +5,7 @@
     using System;
     using System.Collections.Generic;
     using System.Data.Entity;
+    using System.IdentityModel.Tokens.Jwt;
     using System.Linq;
     using System.Runtime.Caching;
     using System.Text;
@@ -38,7 +39,7 @@
             return user.Uid;
         }
 
-        public async Task<Guid> LoginUser(LoginUserRequest request)
+        public async Task<string> LoginUser(LoginUserRequest request)
         {
 
             User user = await _unitOfWork.Users.All()
@@ -56,7 +57,13 @@
 
             MemoryCache.Default.Set($"currentUser", user, policy);
 
-            return user.Uid;
+
+            //JwtSecurityToken token = new JwtSecurityToken(user.Uid.ToString());
+
+
+
+
+            return "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiYWRtaW4iOnRydWV9.TJVA95OrM7E2cBab30RMHrHDcEfxjoYZgeFONFh7HgQ";
         }
     }
 }

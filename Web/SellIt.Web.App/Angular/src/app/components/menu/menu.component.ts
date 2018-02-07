@@ -27,4 +27,12 @@ export class MenuComponent {
     navigateToNewAdvert(): void {
         this.router.navigate(['/adverts/new']);
     }
+
+    navigateToLogin(): void {
+        this.router.navigate(['/profile']);
+    }
+
+    logOut(): void {
+        this.authService.logOut();
+    }
 }

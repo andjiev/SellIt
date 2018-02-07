@@ -30,9 +30,9 @@ namespace SellIt.Web.API.Controllers
 
         [HttpPost]
         [Route("login")]
-        public async Task<Guid> LoginUser([FromBody]LoginUserRequest request)
+        public async Task<string> LoginUser([FromBody]LoginUserRequest request)
         {
-            Guid authToken = await _userService.LoginUser(request);
+            string authToken = await _userService.LoginUser(request);
             return authToken;
         }
     }

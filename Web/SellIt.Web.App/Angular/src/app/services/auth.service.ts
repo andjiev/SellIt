@@ -10,12 +10,14 @@ export class AuthService {
         private tokenService: TokenService) { }
 
     public login(request: ILoginUserRequest): void {
-        this.apiService.loginUser(request).subscribe(
-            response => {
-                this.tokenService.setToken(response);
-            },
-            () => { }
-        );
+        // this.apiService.loginUser(request).subscribe(
+        //     response => {
+
+
+        //         this.tokenService.setToken(TokenGenerator);
+        //     },
+        //     () => { }
+        // );
     }
 
     public logOut(): void {
@@ -28,11 +30,12 @@ export class AuthService {
     }
 
     public isloggedIn(): boolean {
-        const token = this.tokenService.getToken();
+        // const token = this.tokenService.getToken();
 
-        if (token && token.token) {
-            return !token.isExpired();
-        }
-        return false;
+        // if (token && token.token) {
+        //     return !token.isExpired();
+        // }
+        // return false;
+        return true;
     }
 }
