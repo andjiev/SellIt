@@ -1,3 +1,4 @@
+import { Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { NgxGalleryOptions, NgxGalleryImage, NgxGalleryAnimation, NgxGalleryImageSize } from 'ngx-gallery';
 
@@ -11,7 +12,7 @@ export class AdvertDetailsComponent implements OnInit {
   galleryOptions: NgxGalleryOptions[];
   galleryImages: NgxGalleryImage[];
 
-  constructor() { }
+  constructor(private router: Router) { }
 
   ngOnInit() {
 
@@ -19,8 +20,8 @@ export class AdvertDetailsComponent implements OnInit {
       {
         thumbnailsColumns: 3,
         imageAnimation: NgxGalleryAnimation.Fade,
-        height: '660px',
-        width: '550px'
+        height: '100%',
+        width: '100%'
 
       },
       // max-width 800
@@ -42,9 +43,9 @@ export class AdvertDetailsComponent implements OnInit {
 
     this.galleryImages = [
       {
-        small: 'assets/img/Screenshot_4.png',
-        medium: 'assets/img/Screenshot_4.png',
-        big: 'assets/img/Screenshot_4.png'
+        small: 'assets/img/sellIt2.png',
+        medium: 'assets/img/sellIt2.png',
+        big: 'assets/img/sellIt2.png'
       },
       {
         small: 'assets/img/sellIt.png',
@@ -57,6 +58,10 @@ export class AdvertDetailsComponent implements OnInit {
         big: 'assets/img/sellIt.png'
       }
     ];
+  }
+
+  navigateToList(): void {
+    this.router.navigate(['/adverts']);
   }
 
 }

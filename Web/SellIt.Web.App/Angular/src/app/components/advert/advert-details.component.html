@@ -1,8 +1,8 @@
 <div class="col-md-12">
-  <button class="btn btn-round btn-rose">Назад</button>
+  <button class="btn btn-round btn-rose" (click)="navigateToList()">Назад</button>
 </div>
 
-<div class="row" style="margin-top: 80px">
+<div class="row">
 
   <div class="main main-raised">
     <div class="row">
@@ -13,8 +13,14 @@
       <div class="col-md-6 col-sm-6">
         <div class="col-md-12">
           <h2 class="title text-primary"> Наслов </h2>
-          <h3 class="main-price">Цена: 335ден</h3>
         </div>
+
+        <div class="row col-md-12">
+          <h3 class="col col-md-6">Цена: 335ден</h3>
+          <h3 class="main-price col-md-6 pull-right">Категорија: Автомобил</h3>
+        </div>
+
+
 
         <hr />
 
@@ -31,7 +37,7 @@
 
         <hr />
 
-        <div class="row col-md-12">
+        <div class="row col-md-12 mb-4">
           <div class="col-md-4">
             <mat-icon class="text-primary align-middle">face</mat-icon>
             <span>Перо</span>
@@ -41,7 +47,7 @@
             <span>Битола</span>
           </div>
           <div class="col-md-4 text-right">
-            <mat-icon class="text-primary align-middle">phone</mat-icon>            
+            <mat-icon class="text-primary align-middle">phone</mat-icon>
             <span>078/285-716</span>
           </div>
 

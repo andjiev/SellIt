@@ -9,3 +9,12 @@ body {
 .cursor-pointer {
     cursor: pointer;
 }
+
+.container:not(.header-container) {
+    max-width: 1400px;
+}
+
+.main-raised {
+    margin-top: 25px;
+    width: 100%;
+}

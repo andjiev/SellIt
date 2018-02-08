@@ -1,11 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-advert-creation',
   templateUrl: './advert-creation.component.html',
   styleUrls: ['./advert-creation.component.css']
 })
-export class AdvertCreationComponent implements OnInit {
+export class AdvertCreationComponent {
 
   //public config: DropzoneConfigInterface = {
   //  url: 'https://httpbin.org/post',
@@ -16,9 +16,19 @@ export class AdvertCreationComponent implements OnInit {
   //  createImageThumbnails: true
   //};
 
+  isCategorySelected = true;
+  selectedCategory: string;
+
+  categories = [
+    { value: 'avto', viewValue: 'Автомобил' },
+    { value: 'tel', viewValue: 'Телефон' }
+  ];
+
   constructor() { }
 
-  ngOnInit() {
+  saveCategory() {
+    alert(this.selectedCategory);
+
   }
 
 }

@@ -1,0 +1,107 @@
+<div class="row pt-5">
+    <div class="col-md-5 col-sm-6 ml-auto mr-auto">
+        <div class="card card-signup">
+            <form class="form">
+
+                <div class="card-header card-header-primary text-center">
+                    <h4>{{ isLogin ? 'Најава' : 'Регистрација' }}</h4>
+                </div>
+                <div class="card-body mt-3">
+                    <form *ngIf="isLogin" [formGroup]="loginFormGroup">
+                        <span class="bmd-form-group">
+                            <div class="input-group">
+                                <span class="input-group-addon">
+                                    <mat-icon>email</mat-icon>
+                                </span>
+                                <mat-form-field class="col-md-10">
+                                    <input matInput placeholder="Емаил" formControlName="email">
+                                </mat-form-field>
+                            </div>
+                        </span>
+
+                        <span class="bmd-form-group">
+                            <div class="input-group">
+                                <span class="input-group-addon">
+                                    <mat-icon>lock_outline</mat-icon>
+                                </span>
+                                <mat-form-field class="col-md-10">
+                                    <input matInput placeholder="Лозинка" formControlName="password" [type]="hide ? 'password' : 'text'">
+                                    <mat-icon matSuffix class="cursor-pointer" (click)="hide = !hide">{{ hide ? 'visibility' : 'visibility_off' }}</mat-icon>
+                                </mat-form-field>
+                            </div>
+                        </span>
+                    </form>
+                    <form *ngIf="!isLogin" [formGroup]="signUpFormGroup">
+                        <span class="bmd-form-group">
+                            <div class="input-group">
+                                <span class="input-group-addon">
+                                    <mat-icon>face</mat-icon>
+                                </span>
+                                <mat-form-field class="col-md-10">
+                                    <input matInput placeholder="Име" formControlName="name">
+                                </mat-form-field>
+                            </div>
+                        </span>
+
+                        <span class="bmd-form-group">
+                            <div class="input-group">
+                                <span class="input-group-addon">
+                                    <mat-icon>email</mat-icon>
+                                </span>
+                                <mat-form-field class="col-md-10">
+                                    <input matInput placeholder="Емаил" formControlName="email">
+                                </mat-form-field>
+                            </div>
+                        </span>
+
+                        <span class="bmd-form-group">
+                            <div class="input-group">
+                                <span class="input-group-addon">
+                                    <mat-icon>lock_outline</mat-icon>
+                                </span>
+                                <mat-form-field class="col-md-10">
+                                    <input matInput placeholder="Лозинка" formControlName="password" [type]="hide ? 'password' : 'text'">
+                                    <mat-icon matSuffix class="cursor-pointer" (click)="hide = !hide">{{ hide ? 'visibility' : 'visibility_off' }}</mat-icon>
+                                </mat-form-field>
+                            </div>
+                        </span>
+
+                        <span class="bmd-form-group">
+                            <div class="input-group">
+                                <span class="input-group-addon">
+                                    <mat-icon>location_city</mat-icon>
+                                </span>
+                                <mat-form-field class="col-md-10">
+                                    <mat-select placeholder="Град" formControlName="city">
+                                        <mat-option *ngFor="let city of cities" [value]="city.value">
+                                            {{ city.viewValue }}
+                                        </mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+                        </span>
+
+                        <span class="bmd-form-group">
+                            <div class="input-group">
+                                <span class="input-group-addon">
+                                    <mat-icon>phone</mat-icon>
+                                </span>
+                                <mat-form-field class="col-md-10">
+                                    <input matInput placeholder="Телефон" formControlName="phone">
+                                </mat-form-field>
+                            </div>
+                        </span>
+
+                    </form>
+
+                </div>
+
+                <div class="col-md-12">
+                    <a class="btn btn-info btn-link btn-lg col-md-6 text-center" (click)="changeForm()">{{ isLogin ? 'Регистрација' : 'Најава' }}</a>
+                    <a class="btn btn-primary btn-link btn-lg col-md-5" (click)="finishForm()">{{ isLogin ? 'Најава' : 'Регистрација' }}</a>
+                </div>
+
+            </form>
+        </div>
+    </div>
+</div>

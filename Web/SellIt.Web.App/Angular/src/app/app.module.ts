@@ -6,6 +6,8 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { AppComponent } from './app.component';
 import { MenuComponent } from './components/menu/menu.component';
+import { AdvertDetailsComponent } from './components/advert/advert-details.component';
+import { ProfileLoginComponent } from './components/profile/profile-login.component';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MaterialModule } from './theme/material.module';
@@ -16,9 +18,7 @@ import { AdvertCreationComponent } from './components/advert/advert-creation.com
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { AuthModule } from 'angular2-auth';
-import { Angular2TokenService } from 'angular2-token';
 import { NgxGalleryModule } from 'ngx-gallery';
-import { AdvertDetailsComponent } from './components/advert/advert-details.component';
 
 @NgModule({
   declarations: [
@@ -28,7 +28,8 @@ import { AdvertDetailsComponent } from './components/advert/advert-details.compo
     AdvertComponent,
     ProfileComponent,
     AdvertCreationComponent,
-    AdvertDetailsComponent
+    AdvertDetailsComponent,
+    ProfileLoginComponent
   ],
   imports: [
     BrowserModule,
@@ -43,7 +44,6 @@ import { AdvertDetailsComponent } from './components/advert/advert-details.compo
   ],
   providers: [
     ApiService,
-    Angular2TokenService,
     AuthService,
   ],
   bootstrap: [AppComponent]
