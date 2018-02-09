@@ -1,5 +1,4 @@
 import { Router } from '@angular/router';
-import { ApiService } from './api.service';
 import { Injectable } from '@angular/core';
 import { TokenService } from 'angular2-auth';
 import { ILoginUserRequest } from '../models/models';
@@ -7,31 +6,16 @@ import { ILoginUserRequest } from '../models/models';
 @Injectable()
 export class AuthService {
 
-    constructor(private apiService: ApiService,
-        private tokenService: TokenService,
+    constructor(private tokenService: TokenService,
         private router: Router) { }
-
-    public login(request: ILoginUserRequest): void {
-        this.apiService.loginUser(request).subscribe(
-            response => {
-                this.tokenService.setToken(response);
-                this.router.navigate(['profile']);
-            },
-            () => { }
-        );
-    }
 
     public logOut(): void {
         this.tokenService.removeToken();
+        this.router.navigate(['profile', 'login']);
     }
 
-    public getUserUid(): string {
-        const token = this.tokenService.getToken();
-        return token.decodeToken().unique_name;
-    }
-
-    public getUserToken(): any {
-        return this.tokenService.getToken();
+    public getUserToken(): string {
+        return this.tokenService.getToken().token;
     }
 
     public isloggedIn(): boolean {

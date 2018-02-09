@@ -1,9 +1,9 @@
 <div class="row pt-5">
-    <div class="col-md-5 col-sm-6 ml-auto mr-auto">
+    <div class="col-md-4 col-sm-6 ml-auto mr-auto">
         <div class="card card-signup">
             <form class="form">
 
-                <div class="card-header card-header-primary text-center">
+                <div class="card-header card-header-rose text-center">
                     <h4>{{ isLogin ? 'Најава' : 'Регистрација' }}</h4>
                 </div>
                 <div class="card-body mt-3">
@@ -14,7 +14,7 @@
                                     <mat-icon>email</mat-icon>
                                 </span>
                                 <mat-form-field class="col-md-10">
-                                    <input matInput placeholder="Емаил" formControlName="email">
+                                    <input matInput placeholder="Емаил" formControlName="email" required>
                                 </mat-form-field>
                             </div>
                         </span>
@@ -25,7 +25,7 @@
                                     <mat-icon>lock_outline</mat-icon>
                                 </span>
                                 <mat-form-field class="col-md-10">
-                                    <input matInput placeholder="Лозинка" formControlName="password" [type]="hide ? 'password' : 'text'">
+                                    <input matInput placeholder="Лозинка" formControlName="password" [type]="hide ? 'password' : 'text'" required>
                                     <mat-icon matSuffix class="cursor-pointer" (click)="hide = !hide">{{ hide ? 'visibility' : 'visibility_off' }}</mat-icon>
                                 </mat-form-field>
                             </div>
@@ -38,7 +38,7 @@
                                     <mat-icon>face</mat-icon>
                                 </span>
                                 <mat-form-field class="col-md-10">
-                                    <input matInput placeholder="Име" formControlName="name">
+                                    <input matInput placeholder="Име" formControlName="name" required>
                                 </mat-form-field>
                             </div>
                         </span>
@@ -49,7 +49,7 @@
                                     <mat-icon>email</mat-icon>
                                 </span>
                                 <mat-form-field class="col-md-10">
-                                    <input matInput placeholder="Емаил" formControlName="email">
+                                    <input matInput placeholder="Емаил" formControlName="email" required>
                                 </mat-form-field>
                             </div>
                         </span>
@@ -60,7 +60,7 @@
                                     <mat-icon>lock_outline</mat-icon>
                                 </span>
                                 <mat-form-field class="col-md-10">
-                                    <input matInput placeholder="Лозинка" formControlName="password" [type]="hide ? 'password' : 'text'">
+                                    <input matInput placeholder="Лозинка" formControlName="password" [type]="hide ? 'password' : 'text'" required>
                                     <mat-icon matSuffix class="cursor-pointer" (click)="hide = !hide">{{ hide ? 'visibility' : 'visibility_off' }}</mat-icon>
                                 </mat-form-field>
                             </div>
@@ -72,7 +72,7 @@
                                     <mat-icon>location_city</mat-icon>
                                 </span>
                                 <mat-form-field class="col-md-10">
-                                    <mat-select placeholder="Град" formControlName="city">
+                                    <mat-select placeholder="Град" formControlName="city" required>
                                         <mat-option *ngFor="let city of cities" [value]="city.value">
                                             {{ city.viewValue }}
                                         </mat-option>
@@ -87,7 +87,7 @@
                                     <mat-icon>phone</mat-icon>
                                 </span>
                                 <mat-form-field class="col-md-10">
-                                    <input matInput placeholder="Телефон" formControlName="phone">
+                                    <input matInput placeholder="Телефон" formControlName="phone" required>
                                 </mat-form-field>
                             </div>
                         </span>
@@ -97,10 +97,9 @@
                 </div>
 
                 <div class="col-md-12">
-                    <a class="btn btn-info btn-link btn-lg col-md-6 text-center" (click)="changeForm()">{{ isLogin ? 'Регистрација' : 'Најава' }}</a>
-                    <a class="btn btn-primary btn-link btn-lg col-md-5" (click)="finishForm()">{{ isLogin ? 'Најава' : 'Регистрација' }}</a>
+                    <a class="btn btn-primary btn-link btn-lg col-md-6 text-center" (click)="changeForm()">{{ isLogin ? 'Регистрација' : 'Најава' }}</a>
+                    <a class="btn btn-rose btn-link btn-lg col-md-5" (click)="finishForm()">{{ isLogin ? 'Најава' : 'Регистрација' }}</a>
                 </div>
-
             </form>
         </div>
     </div>

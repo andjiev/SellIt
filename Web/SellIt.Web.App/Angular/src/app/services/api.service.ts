@@ -1,4 +1,4 @@
-import { TokenService } from 'angular2-auth';
+import { AuthService } from './auth.service';
 import { ICreateUserRequest, ILoginUserRequest, IUserDto } from './../models/models';
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
@@ -9,7 +9,7 @@ import { RequestOptions } from '@angular/http';
 @Injectable()
 export class ApiService {
     constructor(private httpService: HttpClient,
-        private tokenService: TokenService) { }
+        private authService: AuthService) { }
 
     createUser(request: ICreateUserRequest): Observable<string> {
         const url = this.getUrl('users');
@@ -32,7 +32,7 @@ export class ApiService {
 
     private getJwtHeader() {
         return new HttpHeaders({
-            'Authorization': `Bearer ${this.tokenService.getToken().token}`
+            'Authorization': `Bearer ${this.authService.getUserToken()}`
         });
     }
 }

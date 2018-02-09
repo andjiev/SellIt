@@ -10,11 +10,11 @@ body {
     cursor: pointer;
 }
 
-.container:not(.header-container) {
+.container {
     max-width: 1400px;
 }
 
-.main-raised {
+.main {
     margin-top: 25px;
     width: 100%;
 }

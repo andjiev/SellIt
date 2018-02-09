@@ -25,21 +25,18 @@ namespace SellIt.Web.API.Controllers
         [HttpPost]
         [Route("")]
         [AllowAnonymous]
-        public async Task<Guid> CreateUser([FromBody]CreateUserRequest request)
+        public async Task<string> CreateUser([FromBody]CreateUserRequest request)
         {
-            Guid userUid = await _userService.CreateUser(request);
-            return userUid;
+            string authToken = await _userService.CreateUser(request);
+            return authToken;
         }
 
 
         [HttpGet]
         [Route("")]
-        [Authorize(Roles ="Admin")]
+        [CustomAuthorize]
         public async Task<UserDto> GetUserData()
         {
-            var c = RequestContext.Principal.Identity;
-
-
             UserDto userData = await _userService.GetUserData();
             return userData;
         }

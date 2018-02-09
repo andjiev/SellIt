@@ -7,7 +7,7 @@
 
     public interface IUserService
     {
-        Task<Guid> CreateUser(CreateUserRequest request);
+        Task<string> CreateUser(CreateUserRequest request);
 
         Task<UserDto> GetUserData();
 

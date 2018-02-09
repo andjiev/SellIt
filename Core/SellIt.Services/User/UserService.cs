@@ -2,6 +2,7 @@
 {
     using Microsoft.IdentityModel.Tokens;
     using SellIt.Data;
+    using SellIt.Models.CurrentUser;
     using SellIt.Models.User;
     using System;
     using System.Collections.Generic;
@@ -22,7 +23,7 @@
             _unitOfWork = unitOfWork;
         }
 
-        public async Task<Guid> CreateUser(CreateUserRequest request)
+        public async Task<string> CreateUser(CreateUserRequest request)
         {
             User user = new User
             {
@@ -38,13 +39,26 @@
             _unitOfWork.Users.Insert(user);
             await _unitOfWork.SaveAsync();
 
-            return user.Uid;
+            return GenerateTokenForUser(user.Uid);
         }
 
         public async Task<UserDto> GetUserData()
         {
-            return new UserDto();
-        }
+            CurrentUser currentUser = MemoryCache.Default[$"currentUser"] as CurrentUser;
+
+            UserDto userDto = await _unitOfWork.Users.All()
+                .Where(x => x.Uid == currentUser.Uid)
+                .Select(s => new UserDto
+                {
+                    Name = s.Name,
+                    City = s.City,
+                    CreatedOn = s.CreatedOn,
+                    Email = s.Email,
+                    Phone = s.Phone
+                }).FirstOrDefaultAsync();
+
+            return userDto;
+        }      
 
         public async Task<string> LoginUser(LoginUserRequest request)
         {
@@ -56,6 +70,11 @@
                 throw new Exception();
             }
 
+            return GenerateTokenForUser(user.Uid);      
+        }
+
+        private string GenerateTokenForUser(Guid userUid)
+        {
             JwtSecurityTokenHandler tokenHandler = new JwtSecurityTokenHandler();
             byte[] key = Encoding.ASCII.GetBytes("qKKy1ugpXrznGWOknVRt");
 
@@ -63,15 +82,14 @@
             {
                 Subject = new ClaimsIdentity(new Claim[]
                 {
-                    new Claim(ClaimTypes.Name, user.Uid.ToString()),
-                    new Claim(ClaimTypes.Role, "Admin")
+                    new Claim(ClaimTypes.Name, userUid.ToString())
                 }),
                 Expires = DateTime.Now.AddDays(7),
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
             };
 
             SecurityToken token = tokenHandler.CreateToken(tokenDescriptor);
-            return tokenHandler.WriteToken(token);       
+            return tokenHandler.WriteToken(token);
         }
     }
 }

@@ -6,7 +6,7 @@ namespace SellIt.Models.User
     {
         public DateTime CreatedOn { get; set; }
 
-        public string FirstName { get; set; }
+        public string Name { get; set; }
 
         public string Email { get; set; }
 

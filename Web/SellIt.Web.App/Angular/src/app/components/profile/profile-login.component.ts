@@ -1,8 +1,9 @@
+import { TokenService } from 'angular2-auth';
 import { AuthService } from './../../services/auth.service';
 import { Router } from '@angular/router';
 import { ApiService } from './../../services/api.service';
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ILoginUserRequest, ICreateUserRequest } from '../../models/models';
 
 @Component({
@@ -28,19 +29,20 @@ export class ProfileLoginComponent {
   constructor(private formBuilder: FormBuilder,
     private apiService: ApiService,
     private router: Router,
-    private authService: AuthService
+    private authService: AuthService,
+    private tokenService: TokenService
   ) {
     this.loginFormGroup = formBuilder.group({
-      email: [''],
-      password: ['']
+      email: [null, [Validators.required, Validators.email]],
+      password: ['', [Validators.required]]
     });
 
     this.signUpFormGroup = formBuilder.group({
-      name: [''],
-      email: [''],
-      password: [''],
-      city: [''],
-      phone: ['']
+      name: ['', [Validators.required]],
+      email: ['', [Validators.required, Validators.email]],
+      password: ['', [Validators.required]],
+      city: ['', [Validators.required]],
+      phone: ['', [Validators.required]]
     });
   }
 
@@ -50,14 +52,19 @@ export class ProfileLoginComponent {
 
   public finishForm(): void {
     if (this.isLogin && this.loginFormGroup.valid) {
-
       const request: ILoginUserRequest = {
         email: this.loginFormGroup.controls['email'].value,
         password: this.loginFormGroup.controls['password'].value
       };
-
-      this.authService.login(request);
+      this.apiService.loginUser(request).subscribe(
+        response => {
+          this.tokenService.setToken(response);
+          this.router.navigate(['/profile']);
+        },
+        error => { }
+      );
     }
+
     if (!this.isLogin && this.signUpFormGroup.valid) {
 
       const request: ICreateUserRequest = {
@@ -70,7 +77,8 @@ export class ProfileLoginComponent {
 
       this.apiService.createUser(request).subscribe(
         response => {
-          this.router.navigate(['/profile', response]);
+          this.tokenService.setToken(response);
+          this.router.navigate(['/profile']);
         },
         error => { }
       );
