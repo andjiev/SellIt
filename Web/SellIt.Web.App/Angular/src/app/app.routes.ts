@@ -26,17 +26,17 @@ export const ROUTES: Routes = [
                 component: AdvertDetailsComponent
             },
             {
-                path: 'profile',
-                component: ProfileComponent
-            },
-            {
                 path: 'profile/login',
                 component: ProfileLoginComponent
+            },
+            {
+                path: 'profile',
+                component: ProfileComponent
             }
         ]
     },
 
 
     // Handle all other routes
-    { path: '**', redirectTo: 'home' }
+    { path: '**', redirectTo: 'adverts' }
 ];

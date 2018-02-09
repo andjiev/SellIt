@@ -1,3 +1,4 @@
+import { Router } from '@angular/router';
 import { ApiService } from './api.service';
 import { Injectable } from '@angular/core';
 import { TokenService } from 'angular2-auth';
@@ -7,35 +8,38 @@ import { ILoginUserRequest } from '../models/models';
 export class AuthService {
 
     constructor(private apiService: ApiService,
-        private tokenService: TokenService) { }
+        private tokenService: TokenService,
+        private router: Router) { }
 
     public login(request: ILoginUserRequest): void {
-        // this.apiService.loginUser(request).subscribe(
-        //     response => {
-
-
-        //         this.tokenService.setToken(TokenGenerator);
-        //     },
-        //     () => { }
-        // );
+        this.apiService.loginUser(request).subscribe(
+            response => {
+                this.tokenService.setToken(response);
+                this.router.navigate(['profile']);
+            },
+            () => { }
+        );
     }
 
     public logOut(): void {
         this.tokenService.removeToken();
     }
 
-    public getCurrentUserUid(): string {
+    public getUserUid(): string {
         const token = this.tokenService.getToken();
-        return token.token;
+        return token.decodeToken().unique_name;
+    }
+
+    public getUserToken(): any {
+        return this.tokenService.getToken();
     }
 
     public isloggedIn(): boolean {
-        // const token = this.tokenService.getToken();
+        const token = this.tokenService.getToken();
 
-        // if (token && token.token) {
-        //     return !token.isExpired();
-        // }
-        // return false;
-        return true;
+        if (token && token.token) {
+            return !token.isExpired();
+        }
+        return false;
     }
 }

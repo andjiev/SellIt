@@ -9,6 +9,8 @@
     {
         Task<Guid> CreateUser(CreateUserRequest request);
 
+        Task<UserDto> GetUserData();
+
         Task<string> LoginUser(LoginUserRequest request);
     }
 }

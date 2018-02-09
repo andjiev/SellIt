@@ -1,5 +1,6 @@
 ﻿namespace SellIt.Services.User
 {
+    using Microsoft.IdentityModel.Tokens;
     using SellIt.Data;
     using SellIt.Models.User;
     using System;
@@ -8,6 +9,7 @@
     using System.IdentityModel.Tokens.Jwt;
     using System.Linq;
     using System.Runtime.Caching;
+    using System.Security.Claims;
     using System.Text;
     using System.Threading.Tasks;
 
@@ -39,31 +41,37 @@
             return user.Uid;
         }
 
+        public async Task<UserDto> GetUserData()
+        {
+            return new UserDto();
+        }
+
         public async Task<string> LoginUser(LoginUserRequest request)
         {
-
             User user = await _unitOfWork.Users.All()
-                .FirstOrDefaultAsync(x => x.Email == request.Email && x.Password == request.Password);
+                 .FirstOrDefaultAsync(x => x.Email == request.Email && x.Password == request.Password);
 
             if (user == null)
             {
                 throw new Exception();
             }
 
-            CacheItemPolicy policy = new CacheItemPolicy
+            JwtSecurityTokenHandler tokenHandler = new JwtSecurityTokenHandler();
+            byte[] key = Encoding.ASCII.GetBytes("qKKy1ugpXrznGWOknVRt");
+
+            SecurityTokenDescriptor tokenDescriptor = new SecurityTokenDescriptor
             {
-                AbsoluteExpiration = DateTimeOffset.Now.AddMinutes(30)
+                Subject = new ClaimsIdentity(new Claim[]
+                {
+                    new Claim(ClaimTypes.Name, user.Uid.ToString()),
+                    new Claim(ClaimTypes.Role, "Admin")
+                }),
+                Expires = DateTime.Now.AddDays(7),
+                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
             };
 
-            MemoryCache.Default.Set($"currentUser", user, policy);
-
-
-            //JwtSecurityToken token = new JwtSecurityToken(user.Uid.ToString());
-
-
-
-
-            return "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiYWRtaW4iOnRydWV9.TJVA95OrM7E2cBab30RMHrHDcEfxjoYZgeFONFh7HgQ";
+            SecurityToken token = tokenHandler.CreateToken(tokenDescriptor);
+            return tokenHandler.WriteToken(token);       
         }
     }
 }

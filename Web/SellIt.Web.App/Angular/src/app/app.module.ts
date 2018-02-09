@@ -44,7 +44,7 @@ import { NgxGalleryModule } from 'ngx-gallery';
   ],
   providers: [
     ApiService,
-    AuthService,
+    AuthService
   ],
   bootstrap: [AppComponent]
 })
