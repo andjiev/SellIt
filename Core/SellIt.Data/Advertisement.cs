@@ -17,24 +17,27 @@ namespace SellIt.Data
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Advertisement()
         {
-            this.CarAdvertisements = new HashSet<CarAdvertisement>();
-            this.PhoneAdvertisements = new HashSet<PhoneAdvertisement>();
             this.AdvertisementImages = new HashSet<AdvertisementImage>();
+            this.MobileAdvertisements = new HashSet<MobileAdvertisement>();
+            this.CarAdvertisements = new HashSet<CarAdvertisement>();
         }
     
         public int Id { get; set; }
         public System.Guid Uid { get; set; }
         public System.DateTime CreatedOn { get; set; }
-        public Nullable<System.DateTime> DeletedOn { get; set; }
         public int UserFk { get; set; }
         public int Category { get; set; }
+        public string Title { get; set; }
+        public int Type { get; set; }
+        public string Description { get; set; }
+        public Nullable<int> Price { get; set; }
     
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<CarAdvertisement> CarAdvertisements { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<PhoneAdvertisement> PhoneAdvertisements { get; set; }
+        public virtual User User { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<AdvertisementImage> AdvertisementImages { get; set; }
-        public virtual User User { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<MobileAdvertisement> MobileAdvertisements { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<CarAdvertisement> CarAdvertisements { get; set; }
     }
 }

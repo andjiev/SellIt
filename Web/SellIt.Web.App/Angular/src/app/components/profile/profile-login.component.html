@@ -69,6 +69,19 @@
                         <span class="bmd-form-group">
                             <div class="input-group">
                                 <span class="input-group-addon">
+                                    <mat-icon>lock_outline</mat-icon>
+                                </span>
+                                <mat-form-field class="col-md-10">
+                                    <input matInput placeholder="Потврдна лозинка" formControlName="confirmPassword" [type]="hideRepeated ? 'password' : 'text'"
+                                        required>
+                                    <mat-icon matSuffix class="cursor-pointer" (click)="hideRepeated = !hideRepeated">{{ hideRepeated ? 'visibility' : 'visibility_off' }}</mat-icon>
+                                </mat-form-field>
+                            </div>
+                        </span>
+
+                        <span class="bmd-form-group">
+                            <div class="input-group">
+                                <span class="input-group-addon">
                                     <mat-icon>location_city</mat-icon>
                                 </span>
                                 <mat-form-field class="col-md-10">
@@ -87,18 +100,16 @@
                                     <mat-icon>phone</mat-icon>
                                 </span>
                                 <mat-form-field class="col-md-10">
-                                    <input matInput placeholder="Телефон" formControlName="phone" required>
+                                    <input matInput [type]="'number'" placeholder="Телефон" formControlName="phone" required>
                                 </mat-form-field>
                             </div>
                         </span>
 
                     </form>
-
                 </div>
-
                 <div class="col-md-12">
-                    <a class="btn btn-primary btn-link btn-lg col-md-6 text-center" (click)="changeForm()">{{ isLogin ? 'Регистрација' : 'Најава' }}</a>
-                    <a class="btn btn-rose btn-link btn-lg col-md-5" (click)="finishForm()">{{ isLogin ? 'Најава' : 'Регистрација' }}</a>
+                    <button class="btn btn-primary btn-link btn-lg col-md-6 text-center" [disabled]="isLoading" (click)="changeForm()">{{ isLogin ? 'Регистрација' : 'Најава' }}</button>
+                    <button class="btn btn-rose btn-link btn-lg col-md-5" [disabled]="isLoading" (click)="onSubmit()">{{ isLogin ? 'Најава' : 'Регистрација' }}</button>
                 </div>
             </form>
         </div>

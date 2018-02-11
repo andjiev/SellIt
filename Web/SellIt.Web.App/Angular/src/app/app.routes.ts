@@ -1,10 +1,12 @@
-import { AdvertCreationComponent } from './components/advert/advert-creation.component';
+import { AdvertCategoryComponent } from './components/advert/creation/advert-category.component';
+import { AdvertCreationComponent } from './components/advert/creation/advert-creation.component';
+import { AdvertDetailsComponent } from './components/advert/details/advert-details.component';
 import { ProfileComponent } from './components/profile/profile.component';
 import { AdvertComponent } from './components/advert/advert.component';
 import { Routes } from '@angular/router';
 import { LayoutComponent } from './components/layout/layout.component';
-import { AdvertDetailsComponent } from './components/advert/advert-details.component';
 import { ProfileLoginComponent } from './components/profile/profile-login.component';
+import { AuthGuardService } from './services/auth-guard.service';
 
 export const ROUTES: Routes = [
     { path: '', redirectTo: 'adverts', pathMatch: 'full' },
@@ -19,7 +21,13 @@ export const ROUTES: Routes = [
             },
             {
                 path: 'adverts/new',
-                component: AdvertCreationComponent
+                component: AdvertCategoryComponent,
+                canActivate: [AuthGuardService]
+            },
+            {
+                path: 'adverts/new/:id',
+                component: AdvertCreationComponent,
+                canActivate: [AuthGuardService]
             },
             {
                 path: 'adverts/details',
@@ -31,7 +39,8 @@ export const ROUTES: Routes = [
             },
             {
                 path: 'profile',
-                component: ProfileComponent
+                component: ProfileComponent,
+                canActivate: [AuthGuardService]
             }
         ]
     },

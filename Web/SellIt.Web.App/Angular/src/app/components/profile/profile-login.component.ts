@@ -3,8 +3,9 @@ import { AuthService } from './../../services/auth.service';
 import { Router } from '@angular/router';
 import { ApiService } from './../../services/api.service';
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 import { ILoginUserRequest, ICreateUserRequest } from '../../models/models';
+import { NotificationsService } from 'angular2-notifications';
 
 @Component({
   selector: 'app-profile-login',
@@ -14,8 +15,10 @@ import { ILoginUserRequest, ICreateUserRequest } from '../../models/models';
 export class ProfileLoginComponent {
   public isLogin = true;
   public hide = true;
+  public hideRepeated = true;
   public loginFormGroup: FormGroup;
   public signUpFormGroup: FormGroup;
+  public isLoading = false;
 
   public cities = [
     { value: 'bt', viewValue: 'Битола' },
@@ -30,42 +33,59 @@ export class ProfileLoginComponent {
     private apiService: ApiService,
     private router: Router,
     private authService: AuthService,
-    private tokenService: TokenService
+    private tokenService: TokenService,
+    private notificationService: NotificationsService
   ) {
     this.loginFormGroup = formBuilder.group({
       email: [null, [Validators.required, Validators.email]],
-      password: ['', [Validators.required]]
+      password: [null, [Validators.required]]
     });
 
     this.signUpFormGroup = formBuilder.group({
-      name: ['', [Validators.required]],
-      email: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required]],
-      city: ['', [Validators.required]],
-      phone: ['', [Validators.required]]
+      name: [null, [Validators.required, Validators.minLength(3)]],
+      email: [null, [Validators.required, Validators.email]],
+      password: [null, [Validators.required, Validators.minLength(6)]],
+      confirmPassword: [null, [Validators.required, Validators.minLength(6)]],
+      city: [null, [Validators.required]],
+      phone: [null, [Validators.required, Validators.minLength(9)]]
     });
   }
 
   public changeForm(): void {
     this.isLogin = !this.isLogin;
+    this.hide = true;
   }
 
-  public finishForm(): void {
+  public onSubmit(): void {
     if (this.isLogin && this.loginFormGroup.valid) {
+      this.isLoading = true;
+
       const request: ILoginUserRequest = {
         email: this.loginFormGroup.controls['email'].value,
         password: this.loginFormGroup.controls['password'].value
       };
+
       this.apiService.loginUser(request).subscribe(
         response => {
           this.tokenService.setToken(response);
           this.router.navigate(['/profile']);
         },
-        error => { }
+        error => {
+          this.isLoading = false;
+        }
       );
     }
 
-    if (!this.isLogin && this.signUpFormGroup.valid) {
+    else if (this.isLogin) {
+      Object.keys(this.loginFormGroup.controls).forEach(field => {
+        const control = this.loginFormGroup.get(field);
+        control.markAsTouched({ onlySelf: true });
+      });
+      this.notificationService.error('Грешка', 'Полињата се задолжителни');
+    }
+
+    else if (!this.isLogin && this.signUpFormGroup.valid && this.passwordsMatch()) {
+      this.isLoading = true;
 
       const request: ICreateUserRequest = {
         name: this.signUpFormGroup.controls['name'].value,
@@ -77,11 +97,31 @@ export class ProfileLoginComponent {
 
       this.apiService.createUser(request).subscribe(
         response => {
+          this.notificationService.success('Успешно', 'Успешна регистрација');
           this.tokenService.setToken(response);
           this.router.navigate(['/profile']);
         },
-        error => { }
+        error => {
+          this.isLoading = false;
+         }
       );
     }
+
+    else if (this.signUpFormGroup.valid && !this.passwordsMatch()) {
+      this.notificationService.error('Грешка', 'Лозинките не се совпаѓаат');
+    }
+
+    else if (!this.isLogin) {
+      Object.keys(this.signUpFormGroup.controls).forEach(field => {
+        const control = this.signUpFormGroup.get(field);
+        control.markAsTouched({ onlySelf: true });
+      });
+      this.notificationService.error('Грешка', 'Полињата се задолжителни');
+    }
+  }
+
+  private passwordsMatch() {
+    return this.signUpFormGroup.controls.password.value ===
+      this.signUpFormGroup.controls.confirmPassword.value;
   }
 }

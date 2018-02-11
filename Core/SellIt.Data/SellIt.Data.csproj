@@ -60,7 +60,7 @@
     </Compile>
     <Compile Include="IRepository.cs" />
     <Compile Include="IUnitOfWork.cs" />
-    <Compile Include="PhoneAdvertisement.cs">
+    <Compile Include="MobileAdvertisement.cs">
       <DependentUpon>SellItDataContext.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />

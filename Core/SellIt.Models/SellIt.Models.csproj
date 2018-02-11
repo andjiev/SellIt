@@ -52,7 +52,7 @@
     <Compile Include="Advertisement\AdvertisementRequest.cs" />
     <Compile Include="Advertisement\CarAdvertisementDto.cs" />
     <Compile Include="Advertisement\CarAdvertisementRequest.cs" />
-    <Compile Include="Advertisement\PhoneAdvertisementRequest.cs" />
+    <Compile Include="Advertisement\MobileAdvertisementRequest.cs" />
     <Compile Include="CurrentUser\CurrentUser.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="User\CreateUserRequest.cs" />

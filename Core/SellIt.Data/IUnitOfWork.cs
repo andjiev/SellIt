@@ -11,7 +11,7 @@ namespace SellIt.Data
 
         IRepository<CarAdvertisement> CarAdvertisements { get; }
 
-        IRepository<PhoneAdvertisement> PhoneAdvertisements { get; }
+        IRepository<MobileAdvertisement> MobileAdvertisements { get; }
 
         Task<int> SaveAsync();
     }

@@ -1,0 +1,48 @@
+<div class="row">
+    <div class="col-md-12">
+        <h2 class="title text-primary"> Оглас за телефон </h2>
+        <hr />
+
+        <form [formGroup]="advertForm" class="row">
+            <mat-form-field class="col-md-6">
+                <input matInput placeholder="Наслов на огласот" formControlName="title" required>
+            </mat-form-field>
+
+            <mat-radio-group class="text-right mt-3" formControlName="type">
+                <mat-radio-button value="1" class="pl-5">Нов</mat-radio-button>
+                <mat-radio-button value="2" class="pl-5">Половен</mat-radio-button>
+            </mat-radio-group>
+
+            <mat-form-field class="col-md-6">
+                <input matInput placeholder="Марка" formControlName="brand" required>
+            </mat-form-field>
+
+            <mat-form-field class="col-md-6">
+                <input matInput placeholder="Модел" formControlName="model" required>
+            </mat-form-field>
+
+            <mat-form-field class="col-md-6">
+                <input matInput placeholder="Боја" formControlName="color" required>
+            </mat-form-field>
+
+            <mat-form-field class="col-md-6">
+                <input matInput placeholder="Меморија" formControlName="memory" required>
+            </mat-form-field>
+
+            <mat-form-field class="col-md-12 mt-3">
+                <textarea rows="8" matInput placeholder="Опис" formControlName="description" required></textarea>
+            </mat-form-field>
+
+            <mat-form-field class="col-md-6 mt-3">
+                <input matInput [type]="'number'" placeholder="Цена" formControlName="price" required>
+            </mat-form-field>
+
+            <mat-checkbox class="col-md-6 mt-4" (change)="handleChange($event)">По договор</mat-checkbox>
+        </form>
+        <hr />
+
+        <div class="text-center mb-3">
+            <button class="btn btn-link btn-rose" (click)="submitForm()">Зачувај</button>
+        </div>
+    </div>
+</div>

@@ -10,6 +10,6 @@
 
         Task CreateCarAdvertisement(CarAdvertisementRequest request);
 
-        Task CreatePhoneAdvertisement(PhoneAdvertisementRequest request);
+        Task CreateMobileAdvertisement(MobileAdvertisementRequest request);
     }
 }

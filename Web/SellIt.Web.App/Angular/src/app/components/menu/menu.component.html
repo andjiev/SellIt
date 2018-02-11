@@ -2,9 +2,9 @@
     <div class="container col header-container">
 
         <div class="navbar-translate">
-             <a class="cursor-pointer" (click)="navigateToAdverts()">
-                <img src="assets/img/sellIt2.png" width="40"/>
-            </a> 
+            <a class="cursor-pointer" (click)="navigateToAdverts()">
+                <img src="assets/img/sellIt2.png" width="40" />
+            </a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
                 <span class="navbar-toggler-icon"></span>
@@ -34,8 +34,14 @@
                         <i class="fa fa-user"></i>
                     </a>
                     <div class="dropdown-menu dropdown-menu-right">
-                        <a class="dropdown-item" (click)="navigateToProfile()">Профил</a>
-                        <a class="dropdown-item" (click)="logOut()">Одјава</a>
+                        <a class="dropdown-item cursor-pointer" (click)="navigateToProfile()">
+                            <mat-icon class="pl-2">face</mat-icon>
+                            <span class="pl-3">Профил</span>
+                        </a>
+                        <a class="dropdown-item cursor-pointer" (click)="logOut()">
+                            <mat-icon class="pl-2">power_settings_new</mat-icon>
+                            <span class="pl-3">Одјава</span>
+                        </a>
                     </div>
                 </li>
             </ul>

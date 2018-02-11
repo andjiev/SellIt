@@ -12,11 +12,14 @@ namespace SellIt.Data
     using System;
     using System.Collections.Generic;
     
-    public partial class PhoneAdvertisement
+    public partial class MobileAdvertisement
     {
         public int Id { get; set; }
-        public string Model { get; set; }
         public int AdvertisementFk { get; set; }
+        public string Model { get; set; }
+        public string Brand { get; set; }
+        public string Memory { get; set; }
+        public string Color { get; set; }
     
         public virtual Advertisement Advertisement { get; set; }
     }

@@ -1,5 +1,6 @@
 ﻿using SellIt.Models.Advertisement;
 using SellIt.Services.Advertisement;
+using SellIt.Web.API.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +10,7 @@ using System.Web.Http;
 
 namespace SellIt.Web.API.Controllers
 {
-    [RoutePrefix("api/advertisement")]
+    [RoutePrefix("api/advertisements")]
     public class AdvertisementController : ApiController
     {
         private readonly IAdvertisementService _advertisementService;
@@ -18,9 +19,10 @@ namespace SellIt.Web.API.Controllers
         {
             _advertisementService = advertisementService;
         }
-
-        [Route("")]
+        
         [HttpGet]
+        [Route("")]
+        [AllowAnonymous]
         public async Task<List<AdvertisementDto>> GetAllActiveAdvertisements()
         {
             List<AdvertisementDto> response = await _advertisementService.GetAllActiveAdvertisements();
@@ -29,16 +31,18 @@ namespace SellIt.Web.API.Controllers
 
         [HttpPost]
         [Route("car")]
+        [CustomAuthorize]
         public async Task CreateCarAdvertisement([FromBody]CarAdvertisementRequest request)
         {
             await _advertisementService.CreateCarAdvertisement(request);
         }
 
         [HttpPost]
-        [Route("phone")]
-        public async Task CreatePhoneAdvertisement([FromBody]PhoneAdvertisementRequest request)
+        [Route("mobile")]
+        [CustomAuthorize]
+        public async Task CreateMobileAdvertisement([FromBody]MobileAdvertisementRequest request)
         {
-            await _advertisementService.CreatePhoneAdvertisement(request);
+            await _advertisementService.CreateMobileAdvertisement(request);
         }
     }
 }

@@ -15,8 +15,13 @@ namespace SellIt.Data
     public partial class CarAdvertisement
     {
         public int Id { get; set; }
-        public int Year { get; set; }
+        public string Brand { get; set; }
         public int AdvertisementFk { get; set; }
+        public string Model { get; set; }
+        public string Body { get; set; }
+        public string Color { get; set; }
+        public int Year { get; set; }
+        public int KmTraveled { get; set; }
     
         public virtual Advertisement Advertisement { get; set; }
     }

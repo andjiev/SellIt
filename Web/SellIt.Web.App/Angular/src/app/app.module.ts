@@ -1,3 +1,7 @@
+import { AdvertCarComponent } from './components/advert/categories/car/advert-car.component';
+import { AdvertDetailsComponent } from './components/advert/details/advert-details.component';
+import { AdvertCreationComponent } from './components/advert/creation/advert-creation.component';
+import { AuthGuardService } from './services/auth-guard.service';
 import { AuthService } from './services/auth.service';
 import { ApiService } from './services/api.service';
 import { ROUTES } from './app.routes';
@@ -6,7 +10,6 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { AppComponent } from './app.component';
 import { MenuComponent } from './components/menu/menu.component';
-import { AdvertDetailsComponent } from './components/advert/advert-details.component';
 import { ProfileLoginComponent } from './components/profile/profile-login.component';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -14,11 +17,13 @@ import { MaterialModule } from './theme/material.module';
 import { LayoutComponent } from './components/layout/layout.component';
 import { AdvertComponent } from './components/advert/advert.component';
 import { ProfileComponent } from './components/profile/profile.component';
-import { AdvertCreationComponent } from './components/advert/advert-creation.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { AuthModule } from 'angular2-auth';
 import { NgxGalleryModule } from 'ngx-gallery';
+import { SimpleNotificationsModule } from 'angular2-notifications';
+import { AdvertMobileComponent } from './components/advert/categories/mobile/advert-mobile.component';
+import { AdvertCategoryComponent } from './components/advert/creation/advert-category.component';
 
 @NgModule({
   declarations: [
@@ -29,7 +34,10 @@ import { NgxGalleryModule } from 'ngx-gallery';
     ProfileComponent,
     AdvertCreationComponent,
     AdvertDetailsComponent,
-    ProfileLoginComponent
+    ProfileLoginComponent,
+    AdvertMobileComponent,
+    AdvertCategoryComponent,
+    AdvertCarComponent
   ],
   imports: [
     BrowserModule,
@@ -39,12 +47,14 @@ import { NgxGalleryModule } from 'ngx-gallery';
     ReactiveFormsModule,
     HttpClientModule,
     NgxGalleryModule,
+    SimpleNotificationsModule.forRoot(),
     AuthModule.forRoot(),
     RouterModule.forRoot(ROUTES)
   ],
   providers: [
     ApiService,
-    AuthService
+    AuthService,
+    AuthGuardService
   ],
   bootstrap: [AppComponent]
 })

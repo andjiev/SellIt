@@ -1,0 +1,24 @@
+<div class="row pt-5">
+    <div class="col-md-5 col-sm-6 ml-auto mr-auto">
+        <div class="card">
+            <div class="card-header card-header-primary text-center">
+                <h4>Одбери категорија</h4>
+            </div>
+            <div class="card-body mt-3">
+                <div style="padding-left: 160px; padding-right: 160px">
+                    <mat-form-field>
+                        <mat-select placeholder="Категорија" [(ngModel)]="selectedCategory">
+                            <mat-option *ngFor="let category of categories" [(value)]="category.value">
+                                {{ category.viewValue }}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+
+                    <div class="col-md-12 mt-3 text-center">
+                        <button class="btn btn-link btn-rose" [disabled]="!selectedCategory" (click)="navigateToAdvert()">Следно</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

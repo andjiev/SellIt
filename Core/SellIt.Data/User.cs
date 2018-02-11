@@ -23,7 +23,6 @@ namespace SellIt.Data
         public int Id { get; set; }
         public System.Guid Uid { get; set; }
         public System.DateTime CreatedOn { get; set; }
-        public Nullable<System.DateTime> DeletedOn { get; set; }
         public string Name { get; set; }
         public string Email { get; set; }
         public string Password { get; set; }
