@@ -9,6 +9,6 @@ namespace SellIt.Models.Advertisement
     public enum AdvertisementCategory
     {
         Car = 1,
-        Phone = 2
+        Mobile = 2
     }
 }

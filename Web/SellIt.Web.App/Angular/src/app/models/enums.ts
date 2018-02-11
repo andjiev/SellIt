@@ -1,4 +1,4 @@
-export enum AdvertCategory {
-    Mobile = 1,
-    Auto = 2
+export enum IAdvertisementCategory {
+    Car = 1,
+    Mobile = 2
 }

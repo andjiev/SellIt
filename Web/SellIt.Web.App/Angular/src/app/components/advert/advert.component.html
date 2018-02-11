@@ -1,55 +1,72 @@
-<mat-form-field>
-    <input matInput placeholder="Пребарувај">
-</mat-form-field>
-
-
-<mat-form-field style="margin-left:20px">
-    <mat-select placeholder="Категорија">
-        <mat-option *ngFor="let food of foods" [value]="food.value">
-            {{ food.viewValue }}
-        </mat-option>
-    </mat-select>
-</mat-form-field>
-
-
-<mat-paginator [length]="100" [pageSize]="10" [pageSizeOptions]="[5, 10, 25, 100]">
-</mat-paginator>
-
-<div class="col-md-12" style="background-color: #fff">
-    <hr>
-    <div class="row">
-        <div class="col-12 col-sm-12 col-md-2 text-center">
-            <img class="img-responsive" src="http://placehold.it/120x80" alt="prewiew" width="120" height="80">
+<div class="row col-md-12 main custom-margin-left">
+    <form [formGroup]="filterGroup" class="row col-md-8 pt-3 pb-0 mb-1 ml-3">
+        <mat-form-field>
+            <input matInput placeholder="Пребарувај" formControlName="search">
+        </mat-form-field>
+        <mat-form-field class="ml-4">
+            <mat-select placeholder="Категорија" formControlName="category">
+                <mat-option *ngFor="let category of categories" [value]="category.value">
+                    {{ category.viewValue }}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+        <mat-form-field class="ml-4">
+            <mat-select placeholder="Град" formControlName="city">
+                <mat-option *ngFor="let city of cities" [value]="city.value">
+                    {{ city.viewValue }}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+        <div class="mt-1">
+            <button class="btn btn-rose btn-link" (click)="removeFilters()">Избриши филтри</button>
         </div>
-        <div class="col-12 text-sm-center col-sm-12 text-md-left col-md-6">
-            <h4 class="product-name">
-                <strong>Product Name</strong>
-            </h4>
-            <h4>
-                <small>Product description</small>
-            </h4>
-        </div>
-        <div class="col-12 col-sm-12 text-sm-center col-md-4 text-md-right row">
-            <div class="col-3 col-sm-3 col-md-6 text-md-right" style="padding-top: 5px">
-                <h6>
-                    <strong>25.00
-                        <span class="text-muted">x</span>
-                    </strong>
-                </h6>
-            </div>
-            <div class="col-4 col-sm-4 col-md-4">
-                <div class="quantity">
-                    <input type="button" value="+" class="plus">
-                    <input type="number" step="1" max="99" min="1" value="1" title="Qty" class="qty" size="4">
-                    <input type="button" value="-" class="minus">
+    </form>
+    <mat-paginator class="row col-md-4 pt-3" [pageSize]="10" [pageSizeOptions]="[5, 10, 25, 100]" (page)="pageEvent = $event">
+    </mat-paginator>
+</div>
+
+<div *ngIf="!isLoading">
+    <div *ngIf="filteredAdverts.data.length > 0" class="col-md-12 main">
+
+        <hr />
+        <div *ngFor="let advert of filteredAdverts.data | paginate: { itemsPerPage: pageEvent.pageSize, currentPage: pageEvent.pageIndex + 1, totalItems: pageEvent.length }">
+            <div class="row">
+                <div class="col-12 col-sm-12 col-md-3 text-center">
+                    <img class="img-responsive" src="http://placehold.it/240x160" width="240" height="160">
+                </div>
+                <div class="col-12 text-sm-center col-sm-12 text-md-left col-md-6">
+                    <h4 class="product-name text-primary">
+                        <strong>{{ advert.title }}</strong>
+                    </h4>
+                    <h4>
+                        <small>Цена: </small>
+                        <strong>{{ advert.price ? (advert.price | currency:'MKD ') : 'По договор' }}</strong>
+                    </h4>
+                    <h4 class="mt-5">
+                        <small>Објавено: </small>
+                        <strong>{{ advert.createdOn | amCalendar }}</strong>
+                    </h4>
+                </div>
+                <div class="col-12 col-sm-12 text-sm-center col-md-3 pr-5 text-md-right">
+                    <h4 class="text-primary">
+                        <small>Категорија: </small>
+                        <strong>{{ getCategoryText(advert.category) }}</strong>
+                    </h4>
+                    <h4 style="margin-top: 86px">
+                        <small>Локација: </small>
+                        <strong>{{ advert.location }}</strong>
+                    </h4>
                 </div>
             </div>
-            <div class="col-2 col-sm-2 col-md-2 text-right">
-                <button type="button" class="btn btn-outline-danger btn-xs">
-                    <i class="fa fa-trash" aria-hidden="true"></i>
-                </button>
-            </div>
+            <hr/>
         </div>
     </div>
-    <hr>
+    <div *ngIf="filteredAdverts.data.length === 0" class="col-md-12 main pb-5 pt-5">
+        <div class="col-md-12 text-center" style="padding-right: 102px">
+            <mat-icon style="font-size: 100px;">sentiment_dissatisfied</mat-icon>
+        </div>
+        <div class="col-md-12 text-center">
+            <span style="font-size: 25px">Нема пронајдени записи</span>
+        </div>
+    </div>
 </div>

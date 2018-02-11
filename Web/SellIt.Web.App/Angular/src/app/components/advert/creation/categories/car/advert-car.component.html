@@ -1,6 +1,6 @@
 <div class="row">
     <div class="col-md-12">
-        <h2 class="title text-primary"> Оглас за телефон </h2>
+        <h2 class="title text-primary"> Оглас за автомобил </h2>
         <hr />
 
         <form [formGroup]="advertForm" class="row">
@@ -22,11 +22,19 @@
             </mat-form-field>
 
             <mat-form-field class="col-md-6">
+                <input matInput placeholder="Каросерија" formControlName="body" required>
+            </mat-form-field>
+
+            <mat-form-field class="col-md-6">
                 <input matInput placeholder="Боја" formControlName="color" required>
             </mat-form-field>
 
             <mat-form-field class="col-md-6">
-                <input matInput placeholder="Меморија" formControlName="memory" required>
+                <input matInput [type]="'number'" placeholder="Година производство" formControlName="year" required>
+            </mat-form-field>
+
+            <mat-form-field class="col-md-6">
+                <input matInput [type]="'number'" placeholder="Поминати километри" formControlName="kmTraveled" required>
             </mat-form-field>
 
             <mat-form-field class="col-md-12 mt-3">
@@ -42,7 +50,7 @@
         <hr />
 
         <div class="text-center mb-3">
-            <button class="btn btn-link btn-rose" (click)="submitForm()">Зачувај</button>
+            <button class="btn btn-link btn-rose" [disabled]="isLoading" (click)="submitForm()">Зачувај</button>
         </div>
     </div>
 </div>

@@ -8,9 +8,13 @@ namespace SellIt.Models.Advertisement
 
         public DateTime CreatedOn { get; set; }
 
-        public DateTime? DeletedOn { get; set; }
+        public string Title { get; set; }
 
-        public AdvertisementCategory AdvertisementCategory { get; set; }
+        public AdvertisementCategory Category { get; set; }
+
+        public int? Price { get; set; }
+
+        public string Location { get; set; }
     }
 }
  

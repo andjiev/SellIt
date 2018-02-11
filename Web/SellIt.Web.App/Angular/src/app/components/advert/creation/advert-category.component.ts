@@ -11,8 +11,8 @@ export class AdvertCategoryComponent {
   selectedCategory: string;
 
   categories = [
-    { value: '1', viewValue: 'Телефон' },
-    { value: '2', viewValue: 'Автомобил' }
+    { value: '1', viewValue: 'Автомобил' },
+    { value: '2', viewValue: 'Телефон' }
   ];
 
   constructor(private router: Router) { }

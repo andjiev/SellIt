@@ -1,3 +1,4 @@
+import { IAdvertisementCategory } from './enums';
 export interface ILoginUserRequest {
     email: string;
     password: string;
@@ -22,7 +23,7 @@ export interface IAdvertisementRequest {
     title: string;
     type: number;
     description: string;
-    price: number;
+    price?: number;
 }
 
 export interface IMobileAdvertisementRequest extends IAdvertisementRequest {
@@ -39,4 +40,13 @@ export interface ICarAdvertisementRequest extends IAdvertisementRequest {
     color: string;
     year: number;
     kmTraveled: number;
+}
+
+export interface IAdvertisementDto {
+    uid: string;
+    createdOn: Date;
+    title: string;
+    category: IAdvertisementCategory;
+    price?: number;
+    location: string;
 }

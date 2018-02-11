@@ -1,5 +1,5 @@
 import { Subscription } from 'rxjs';
-import { AdvertCategory } from './../../../models/enums';
+import { IAdvertisementCategory } from './../../../models/enums';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 
@@ -11,8 +11,8 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 export class AdvertCreationComponent implements OnInit, OnDestroy {
   private categorySubscription: Subscription;
 
-  public AdvertCategory = AdvertCategory;
-  public category: AdvertCategory;
+  public AdvertCategory = IAdvertisementCategory;
+  public category: IAdvertisementCategory;
 
   constructor(private route: ActivatedRoute,
   private router: Router) { }

@@ -1,4 +1,5 @@
 import { NgModule } from '@angular/core';
+import { MatPaginatorIntlMak } from './material-custom-paginator';
 
 import {
     MatButtonModule,
@@ -13,7 +14,9 @@ import {
     MatListModule,
     MatRadioModule,
     MatCheckboxModule,
-    MatStepperModule
+    MatStepperModule,
+    MatTableModule,
+    MatPaginatorIntl
 } from '@angular/material';
 
 @NgModule({
@@ -30,7 +33,8 @@ import {
         MatListModule,
         MatRadioModule,
         MatCheckboxModule,
-        MatStepperModule
+        MatStepperModule,
+        MatTableModule
     ],
     exports: [
         MatButtonModule,
@@ -45,7 +49,11 @@ import {
         MatListModule,
         MatRadioModule,
         MatCheckboxModule,
-        MatStepperModule
+        MatStepperModule,
+        MatTableModule
+    ],
+    providers: [
+        { provide: MatPaginatorIntl, useClass: MatPaginatorIntlMak }
     ]
 })
 export class MaterialModule { }

@@ -1,5 +1,10 @@
 import { AuthService } from './auth.service';
-import { ICreateUserRequest, ILoginUserRequest, IUserDto, IMobileAdvertisementRequest, IAdvertisementRequest, ICarAdvertisementRequest } from './../models/models';
+import {
+    ICreateUserRequest, ILoginUserRequest,
+    IUserDto, IMobileAdvertisementRequest,
+    IAdvertisementRequest, ICarAdvertisementRequest,
+    IAdvertisementDto
+} from './../models/models';
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
@@ -34,6 +39,11 @@ export class ApiService {
     createCarAdvert(request: ICarAdvertisementRequest): Observable<any> {
         const url = this.getUrl('advertisements/car');
         return this.httpService.post<any>(url, request, { headers: this.getJwtHeader() });
+    }
+
+    getAdverts(): Observable<IAdvertisementDto[]> {
+        const url = this.getUrl('advertisements');
+        return this.httpService.get<IAdvertisementDto[]>(url);
     }
 
     private getUrl(query: string): string {

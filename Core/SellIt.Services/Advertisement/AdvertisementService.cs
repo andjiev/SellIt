@@ -23,11 +23,15 @@
         public async Task<List<AdvertisementDto>> GetAllActiveAdvertisements()
         {
             List<AdvertisementDto> advertisements = await _unitOfWork.Advertisements.All()
+                .OrderByDescending(x => x.CreatedOn)
                 .Select(x => new AdvertisementDto
                 {
                     Uid = x.Uid,
                     CreatedOn = x.CreatedOn,
-                    AdvertisementCategory = (AdvertisementCategory)x.Category
+                    Title = x.Title,
+                    Category = (AdvertisementCategory)x.Category,
+                    Price = x.Price,
+                    Location = x.User.City
                 }).ToListAsync();
 
             return advertisements;
@@ -82,7 +86,7 @@
                 {
                     Uid = Guid.NewGuid(),
                     CreatedOn = DateTime.Now,
-                    Category = (int)AdvertisementCategory.Phone,
+                    Category = (int)AdvertisementCategory.Mobile,
                     UserFk = currentUser.Id,
                     Title = request.Title,
                     Type = request.Type,

@@ -1,4 +1,5 @@
-import { AdvertCarComponent } from './components/advert/categories/car/advert-car.component';
+import { AdvertCarComponent } from './components/advert/creation/categories/car/advert-car.component';
+import { AdvertMobileComponent } from './components/advert/creation/categories/mobile/advert-mobile.component';
 import { AdvertDetailsComponent } from './components/advert/details/advert-details.component';
 import { AdvertCreationComponent } from './components/advert/creation/advert-creation.component';
 import { AuthGuardService } from './services/auth-guard.service';
@@ -11,6 +12,8 @@ import { NgModule } from '@angular/core';
 import { AppComponent } from './app.component';
 import { MenuComponent } from './components/menu/menu.component';
 import { ProfileLoginComponent } from './components/profile/profile-login.component';
+import { NgxPaginationModule } from 'ngx-pagination';
+import { MomentModule } from 'angular2-moment';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MaterialModule } from './theme/material.module';
@@ -22,7 +25,6 @@ import { HttpClientModule } from '@angular/common/http';
 import { AuthModule } from 'angular2-auth';
 import { NgxGalleryModule } from 'ngx-gallery';
 import { SimpleNotificationsModule } from 'angular2-notifications';
-import { AdvertMobileComponent } from './components/advert/categories/mobile/advert-mobile.component';
 import { AdvertCategoryComponent } from './components/advert/creation/advert-category.component';
 
 @NgModule({
@@ -47,6 +49,8 @@ import { AdvertCategoryComponent } from './components/advert/creation/advert-cat
     ReactiveFormsModule,
     HttpClientModule,
     NgxGalleryModule,
+    NgxPaginationModule,
+    MomentModule,
     SimpleNotificationsModule.forRoot(),
     AuthModule.forRoot(),
     RouterModule.forRoot(ROUTES)
