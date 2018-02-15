@@ -3,8 +3,9 @@ import { ApiService } from './../../../../../services/api.service';
 import { Subscription } from 'rxjs';
 import { Router } from '@angular/router';
 import { Component, OnDestroy } from '@angular/core';
-import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NotificationsService } from 'angular2-notifications';
+import { ImageService } from '../../../../../services/image.service';
 
 @Component({
     selector: 'app-advert-car',
@@ -21,7 +22,8 @@ export class AdvertCarComponent implements OnDestroy {
     constructor(private formBuilder: FormBuilder,
         private notificationService: NotificationsService,
         private router: Router,
-        private apiService: ApiService) {
+        private apiService: ApiService,
+        private imageService: ImageService) {
 
         this.advertForm = formBuilder.group({
             title: ['', [Validators.required]],
@@ -52,7 +54,8 @@ export class AdvertCarComponent implements OnDestroy {
                 year: +controls.year.value,
                 kmTraveled: +controls.kmTraveled.value,
                 description: controls.description.value,
-                price: controls.price.enabled ? +controls.price.value : null
+                price: controls.price.enabled ? +controls.price.value : null,
+                base64Images: this.imageService.getBase64Images()
             };
 
             this.submitFormSubscription = this.apiService.createCarAdvert(request).subscribe(

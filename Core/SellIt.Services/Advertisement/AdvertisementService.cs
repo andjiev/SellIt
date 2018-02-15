@@ -34,6 +34,18 @@
                     Location = x.User.City
                 }).ToListAsync();
 
+
+            foreach (AdvertisementDto advertDto in advertisements)
+            {
+                AdvertisementImage image = await _unitOfWork.AdvertisementImages.All()
+                    .FirstOrDefaultAsync(x => x.Advertisement.Uid == advertDto.Uid);
+
+                if (image != null)
+                {
+                    advertDto.base64Image = Convert.ToBase64String(image.ImageContent);
+                }                
+            }
+
             return advertisements;
         }
 
@@ -67,6 +79,14 @@
                 KmTraveled = request.KmTraveled
             };
 
+            foreach (string base64Image in request.Base64Images)
+            {
+                carAdvertisement.Advertisement.AdvertisementImages.Add(new AdvertisementImage
+                {
+                    ImageContent = Convert.FromBase64String(base64Image)
+                });
+            }
+
             _unitOfWork.CarAdvertisements.Insert(carAdvertisement);
             await _unitOfWork.SaveAsync();
         }
@@ -98,6 +118,14 @@
                 Memory = request.Memory,
                 Color = request.Color
             };
+
+            foreach (string base64Image in request.Base64Images)
+            {
+                mobileAdvertisement.Advertisement.AdvertisementImages.Add(new AdvertisementImage
+                {
+                    ImageContent = Convert.FromBase64String(base64Image)
+                });
+            }
 
             _unitOfWork.MobileAdvertisements.Insert(mobileAdvertisement);
             await _unitOfWork.SaveAsync();

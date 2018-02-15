@@ -24,6 +24,7 @@ export interface IAdvertisementRequest {
     type: number;
     description: string;
     price?: number;
+    base64Images: string[];
 }
 
 export interface IMobileAdvertisementRequest extends IAdvertisementRequest {
@@ -49,4 +50,5 @@ export interface IAdvertisementDto {
     category: IAdvertisementCategory;
     price?: number;
     location: string;
+    base64Image: string;
 }

@@ -15,6 +15,8 @@ namespace SellIt.Models.Advertisement
         public int? Price { get; set; }
 
         public string Location { get; set; }
+
+        public string base64Image { get; set; }
     }
 }
  

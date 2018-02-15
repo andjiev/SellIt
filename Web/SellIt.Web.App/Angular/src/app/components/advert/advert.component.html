@@ -32,7 +32,7 @@
         <div *ngFor="let advert of filteredAdverts.data | paginate: { itemsPerPage: pageEvent.pageSize, currentPage: pageEvent.pageIndex + 1, totalItems: pageEvent.length }">
             <div class="row">
                 <div class="col-12 col-sm-12 col-md-3 text-center">
-                    <img class="img-responsive" src="http://placehold.it/240x160" width="240" height="160">
+                    <img class="img-responsive" src="{{ advert.base64Image ? 'data:image/jpeg;base64,' + advert.base64Image : 'http://placehold.it/240x160' }}" width="240" height="160">
                 </div>
                 <div class="col-12 text-sm-center col-sm-12 text-md-left col-md-6">
                     <h4 class="product-name text-primary">

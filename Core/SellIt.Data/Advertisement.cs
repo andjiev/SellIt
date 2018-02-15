@@ -18,8 +18,8 @@ namespace SellIt.Data
         public Advertisement()
         {
             this.AdvertisementImages = new HashSet<AdvertisementImage>();
-            this.MobileAdvertisements = new HashSet<MobileAdvertisement>();
             this.CarAdvertisements = new HashSet<CarAdvertisement>();
+            this.MobileAdvertisements = new HashSet<MobileAdvertisement>();
         }
     
         public int Id { get; set; }
@@ -36,8 +36,8 @@ namespace SellIt.Data
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<AdvertisementImage> AdvertisementImages { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<MobileAdvertisement> MobileAdvertisements { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<CarAdvertisement> CarAdvertisements { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<MobileAdvertisement> MobileAdvertisements { get; set; }
     }
 }

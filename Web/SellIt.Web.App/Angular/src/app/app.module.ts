@@ -14,6 +14,7 @@ import { MenuComponent } from './components/menu/menu.component';
 import { ProfileLoginComponent } from './components/profile/profile-login.component';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { MomentModule } from 'angular2-moment';
+import { InputFileModule } from 'ngx-input-file';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MaterialModule } from './theme/material.module';
@@ -26,6 +27,7 @@ import { AuthModule } from 'angular2-auth';
 import { NgxGalleryModule } from 'ngx-gallery';
 import { SimpleNotificationsModule } from 'angular2-notifications';
 import { AdvertCategoryComponent } from './components/advert/creation/advert-category.component';
+import { ImageService } from './services/image.service';
 
 @NgModule({
   declarations: [
@@ -51,6 +53,7 @@ import { AdvertCategoryComponent } from './components/advert/creation/advert-cat
     NgxGalleryModule,
     NgxPaginationModule,
     MomentModule,
+    InputFileModule,
     SimpleNotificationsModule.forRoot(),
     AuthModule.forRoot(),
     RouterModule.forRoot(ROUTES)
@@ -58,7 +61,8 @@ import { AdvertCategoryComponent } from './components/advert/creation/advert-cat
   providers: [
     ApiService,
     AuthService,
-    AuthGuardService
+    AuthGuardService,
+    ImageService
   ],
   bootstrap: [AppComponent]
 })

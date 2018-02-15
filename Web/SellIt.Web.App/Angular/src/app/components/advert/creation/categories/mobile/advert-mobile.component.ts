@@ -2,9 +2,10 @@ import { IMobileAdvertisementRequest } from './../../../../../models/models';
 import { ApiService } from './../../../../../services/api.service';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { Component, OnDestroy } from '@angular/core';
+import { Component, OnDestroy, Input, SimpleChanges, OnChanges } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { NotificationsService } from 'angular2-notifications';
+import { ImageService } from '../../../../../services/image.service';
 
 @Component({
   selector: 'app-advert-mobile',
@@ -12,7 +13,6 @@ import { NotificationsService } from 'angular2-notifications';
   styleUrls: ['./advert-mobile.component.css']
 })
 export class AdvertMobileComponent implements OnDestroy {
-
   private submitFormSubscription: Subscription;
 
   public advertForm: FormGroup;
@@ -21,7 +21,8 @@ export class AdvertMobileComponent implements OnDestroy {
   constructor(private formBuilder: FormBuilder,
     private notificationService: NotificationsService,
     private router: Router,
-    private apiService: ApiService) {
+    private apiService: ApiService,
+    private imageService: ImageService) {
 
     this.advertForm = formBuilder.group({
       title: ['', [Validators.required]],
@@ -48,7 +49,8 @@ export class AdvertMobileComponent implements OnDestroy {
         color: controls.color.value,
         memory: controls.memory.value,
         description: controls.description.value,
-        price: controls.price.enabled ? +controls.price.value : null
+        price: controls.price.enabled ? +controls.price.value : null,
+        base64Images: this.imageService.getBase64Images()
       };
 
       this.submitFormSubscription = this.apiService.createMobileAdvert(request).subscribe(

@@ -24,7 +24,7 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="ImageContent" Type="binary" MaxLength="50" Nullable="false" />
+          <Property Name="ImageContent" Type="varbinary(max)" Nullable="false" />
           <Property Name="AdvertisementFk" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="CarAdvertisement">
@@ -144,6 +144,7 @@
         <EntityContainer Name="SellItDbContext" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Advertisements" EntityType="SellItModel.Advertisement" />
           <EntitySet Name="AdvertisementImages" EntityType="SellItModel.AdvertisementImage" />
+          <EntitySet Name="CarAdvertisements" EntityType="SellItModel.CarAdvertisement" />
           <EntitySet Name="MobileAdvertisements" EntityType="SellItModel.MobileAdvertisement" />
           <EntitySet Name="Users" EntityType="SellItModel.User" />
           <AssociationSet Name="FK_Advertisement_User" Association="SellItModel.FK_Advertisement_User">
@@ -154,14 +155,13 @@
             <End Role="Advertisement" EntitySet="Advertisements" />
             <End Role="AdvertisementImage" EntitySet="AdvertisementImages" />
           </AssociationSet>
-          <AssociationSet Name="FK_PhoneAdvertisement_Advertisement" Association="SellItModel.FK_PhoneAdvertisement_Advertisement">
-            <End Role="Advertisement" EntitySet="Advertisements" />
-            <End Role="MobileAdvertisement" EntitySet="MobileAdvertisements" />
-          </AssociationSet>
-          <EntitySet Name="CarAdvertisements" EntityType="SellItModel.CarAdvertisement" />
           <AssociationSet Name="FK_CarAdvertisement_Advertisement" Association="SellItModel.FK_CarAdvertisement_Advertisement">
             <End Role="Advertisement" EntitySet="Advertisements" />
             <End Role="CarAdvertisement" EntitySet="CarAdvertisements" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PhoneAdvertisement_Advertisement" Association="SellItModel.FK_PhoneAdvertisement_Advertisement">
+            <End Role="Advertisement" EntitySet="Advertisements" />
+            <End Role="MobileAdvertisement" EntitySet="MobileAdvertisements" />
           </AssociationSet>
         </EntityContainer>
         <EntityType Name="Advertisement">
@@ -179,17 +179,31 @@
           <Property Name="Price" Type="Int32" />
           <NavigationProperty Name="User" Relationship="SellItModel.FK_Advertisement_User" FromRole="Advertisement" ToRole="User" />
           <NavigationProperty Name="AdvertisementImages" Relationship="SellItModel.FK_AdvertisementImage_Advertisement" FromRole="Advertisement" ToRole="AdvertisementImage" />
-          <NavigationProperty Name="MobileAdvertisements" Relationship="SellItModel.FK_PhoneAdvertisement_Advertisement" FromRole="Advertisement" ToRole="MobileAdvertisement" />
           <NavigationProperty Name="CarAdvertisements" Relationship="SellItModel.FK_CarAdvertisement_Advertisement" FromRole="Advertisement" ToRole="CarAdvertisement" />
+          <NavigationProperty Name="MobileAdvertisements" Relationship="SellItModel.FK_PhoneAdvertisement_Advertisement" FromRole="Advertisement" ToRole="MobileAdvertisement" />
         </EntityType>
         <EntityType Name="AdvertisementImage">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="ImageContent" Type="Binary" Nullable="false" MaxLength="50" FixedLength="true" />
+          <Property Name="ImageContent" Type="Binary" Nullable="false" MaxLength="Max" FixedLength="false" />
           <Property Name="AdvertisementFk" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Advertisement" Relationship="SellItModel.FK_AdvertisementImage_Advertisement" FromRole="AdvertisementImage" ToRole="Advertisement" />
+        </EntityType>
+        <EntityType Name="CarAdvertisement">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Brand" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="AdvertisementFk" Type="Int32" Nullable="false" />
+          <Property Name="Model" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="Body" Type="String" Nullable="false" MaxLength="20" FixedLength="true" Unicode="true" />
+          <Property Name="Color" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="Year" Type="Int32" Nullable="false" />
+          <Property Name="KmTraveled" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Advertisement" Relationship="SellItModel.FK_CarAdvertisement_Advertisement" FromRole="CarAdvertisement" ToRole="Advertisement" />
         </EntityType>
         <EntityType Name="MobileAdvertisement">
           <Key>
@@ -243,32 +257,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_PhoneAdvertisement_Advertisement">
-          <End Type="SellItModel.Advertisement" Role="Advertisement" Multiplicity="1" />
-          <End Type="SellItModel.MobileAdvertisement" Role="MobileAdvertisement" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Advertisement">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="MobileAdvertisement">
-              <PropertyRef Name="AdvertisementFk" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <EntityType Name="CarAdvertisement">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Brand" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="true" />
-          <Property Name="AdvertisementFk" Type="Int32" Nullable="false" />
-          <Property Name="Model" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="true" />
-          <Property Name="Body" Type="String" Nullable="false" MaxLength="20" FixedLength="true" Unicode="true" />
-          <Property Name="Color" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="true" />
-          <Property Name="Year" Type="Int32" Nullable="false" />
-          <Property Name="KmTraveled" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Advertisement" Relationship="SellItModel.FK_CarAdvertisement_Advertisement" FromRole="CarAdvertisement" ToRole="Advertisement" />
-        </EntityType>
         <Association Name="FK_CarAdvertisement_Advertisement">
           <End Type="SellItModel.Advertisement" Role="Advertisement" Multiplicity="1" />
           <End Type="SellItModel.CarAdvertisement" Role="CarAdvertisement" Multiplicity="*" />
@@ -277,6 +265,18 @@
               <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="CarAdvertisement">
+              <PropertyRef Name="AdvertisementFk" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PhoneAdvertisement_Advertisement">
+          <End Type="SellItModel.Advertisement" Role="Advertisement" Multiplicity="1" />
+          <End Type="SellItModel.MobileAdvertisement" Role="MobileAdvertisement" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Advertisement">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="MobileAdvertisement">
               <PropertyRef Name="AdvertisementFk" />
             </Dependent>
           </ReferentialConstraint>
@@ -311,6 +311,20 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="CarAdvertisements">
+            <EntityTypeMapping TypeName="SellItModel.CarAdvertisement">
+              <MappingFragment StoreEntitySet="CarAdvertisement">
+                <ScalarProperty Name="KmTraveled" ColumnName="KmTraveled" />
+                <ScalarProperty Name="Year" ColumnName="Year" />
+                <ScalarProperty Name="Color" ColumnName="Color" />
+                <ScalarProperty Name="Body" ColumnName="Body" />
+                <ScalarProperty Name="Model" ColumnName="Model" />
+                <ScalarProperty Name="AdvertisementFk" ColumnName="AdvertisementFk" />
+                <ScalarProperty Name="Brand" ColumnName="Brand" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="MobileAdvertisements">
             <EntityTypeMapping TypeName="SellItModel.MobileAdvertisement">
               <MappingFragment StoreEntitySet="MobileAdvertisement">
@@ -333,20 +347,6 @@
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
                 <ScalarProperty Name="Uid" ColumnName="Uid" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="CarAdvertisements">
-            <EntityTypeMapping TypeName="SellItModel.CarAdvertisement">
-              <MappingFragment StoreEntitySet="CarAdvertisement">
-                <ScalarProperty Name="KmTraveled" ColumnName="KmTraveled" />
-                <ScalarProperty Name="Year" ColumnName="Year" />
-                <ScalarProperty Name="Color" ColumnName="Color" />
-                <ScalarProperty Name="Body" ColumnName="Body" />
-                <ScalarProperty Name="Model" ColumnName="Model" />
-                <ScalarProperty Name="AdvertisementFk" ColumnName="AdvertisementFk" />
-                <ScalarProperty Name="Brand" ColumnName="Brand" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>

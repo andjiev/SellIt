@@ -1,17 +1,20 @@
 <button class="btn btn-round btn-rose" (click)="navigateToCategory()">Назад</button>
 
 <div class="main col-md-12">
-    <div class="col-md-6">
-        <div [ngSwitch]="category">
-            <div *ngSwitchCase="AdvertCategory.Mobile">
-                <app-advert-mobile></app-advert-mobile>
-            </div>
-            <div *ngSwitchCase="AdvertCategory.Car">
-                <app-advert-car></app-advert-car>
+    <div class="row">
+        <div class="col-md-6">
+            <div [ngSwitch]="category">
+                <div *ngSwitchCase="AdvertCategory.Mobile">
+                    <app-advert-mobile></app-advert-mobile>
+                </div>
+                <div *ngSwitchCase="AdvertCategory.Car">
+                    <app-advert-car></app-advert-car>
+                </div>
             </div>
         </div>
-    </div>
-    <div class="col-md-6">
-            <!-- <dropzone style="height: 100%; border: 1px solid black;" [config]="config" [message]="'Click or drag images here to upload'"></dropzone> -->
+        <div class="col-md-6">
+            <input-file inputId="images" inputMaxFiles="3" [model]="inputFileModel" (acceptedFile)="onAccept($event)" (removedFile)="onRemove($event)">
+            </input-file>
+        </div>
     </div>
 </div>

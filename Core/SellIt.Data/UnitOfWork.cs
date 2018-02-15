@@ -21,6 +21,8 @@ namespace SellIt.Data
 
         private IRepository<MobileAdvertisement> _mobileAdvertisements;
 
+        private IRepository<AdvertisementImage> _advertisementImages;
+
         #endregion
 
         #region Properties
@@ -32,6 +34,8 @@ namespace SellIt.Data
         public IRepository<CarAdvertisement> CarAdvertisements => _carAdvertisements ?? (_carAdvertisements = new Repository<CarAdvertisement>(_context));
 
         public IRepository<MobileAdvertisement> MobileAdvertisements => _mobileAdvertisements ?? (_mobileAdvertisements = new Repository<MobileAdvertisement>(_context));
+
+        public IRepository<AdvertisementImage> AdvertisementImages => _advertisementImages ?? (_advertisementImages = new Repository<AdvertisementImage>(_context));
 
         #endregion
 

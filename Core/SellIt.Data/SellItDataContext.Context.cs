@@ -27,8 +27,8 @@ namespace SellIt.Data
     
         public virtual DbSet<Advertisement> Advertisements { get; set; }
         public virtual DbSet<AdvertisementImage> AdvertisementImages { get; set; }
+        public virtual DbSet<CarAdvertisement> CarAdvertisements { get; set; }
         public virtual DbSet<MobileAdvertisement> MobileAdvertisements { get; set; }
         public virtual DbSet<User> Users { get; set; }
-        public virtual DbSet<CarAdvertisement> CarAdvertisements { get; set; }
     }
 }

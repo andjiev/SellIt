@@ -13,6 +13,8 @@ namespace SellIt.Data
 
         IRepository<MobileAdvertisement> MobileAdvertisements { get; }
 
+        IRepository<AdvertisementImage> AdvertisementImages { get; }
+
         Task<int> SaveAsync();
     }
 }
