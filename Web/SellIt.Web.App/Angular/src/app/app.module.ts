@@ -15,6 +15,7 @@ import { ProfileLoginComponent } from './components/profile/profile-login.compon
 import { NgxPaginationModule } from 'ngx-pagination';
 import { MomentModule } from 'angular2-moment';
 import { InputFileModule } from 'ngx-input-file';
+import { LoadingModule, ANIMATION_TYPES } from 'ngx-loading';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MaterialModule } from './theme/material.module';
@@ -54,6 +55,14 @@ import { ImageService } from './services/image.service';
     NgxPaginationModule,
     MomentModule,
     InputFileModule,
+    LoadingModule.forRoot({
+      animationType: ANIMATION_TYPES.chasingDots,
+      backdropBackgroundColour: '#fff',
+      backdropBorderRadius: '4px',
+      primaryColour: '#e91e63',
+      secondaryColour: '#e91e63',
+      tertiaryColour: '#e91e63'
+  }),
     SimpleNotificationsModule.forRoot(),
     AuthModule.forRoot(),
     RouterModule.forRoot(ROUTES)

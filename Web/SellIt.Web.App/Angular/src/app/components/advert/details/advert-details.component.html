@@ -7,7 +7,9 @@
   </div>
 </div>
 
-<div *ngIf="!isLoading" class="main">
+<div class="main">
+  <ngx-loading [show]="isLoading"></ngx-loading>
+
   <div class="row">
 
     <div class="col-md-6 col-sm-6 align-middle">
@@ -17,34 +19,44 @@
       </div>
     </div>
 
-
-    <div class="col-md-6 col-sm-6">
-
+    <div *ngIf="!isLoading" class="col-md-6 col-sm-6">
       <div class="col-md-12">
         <h3 class="text-primary"> {{ advertDetails.title }} </h3>
       </div>
       <hr />
 
       <div class="row col-md-12">
-        <h4 class="col-md-6">Цена: {{ advertDetails.price ? (advertDetails.price | currency:'MKD ') : 'По договор' }}</h4>
-        <h4 class="col-md-6 pull-right text-right">Категорија: {{ getCategoryText(advertDetails.category) }}</h4>
+        <h4 class="col-md-6">
+          <small>Цена: </small>{{ advertDetails.price ? (advertDetails.price | currency:'MKD ') : 'По договор' }}
+        </h4>
+        <h4 class="col-md-6 pull-right text-right">
+          <small>Категорија: </small>{{ getCategoryText(advertDetails.category) }}</h4>
       </div>
       <div class="row col-md-12">
-        <h4 class="col-md-6">Марка: {{ advertDetails.brand }}</h4>
-        <h4 class="col-md-6 pull-right text-right">Модел: {{ advertDetails.model }}</h4>
+        <h4 class="col-md-6">
+          <small>Марка: </small>{{ advertDetails.brand }}</h4>
+        <h4 class="col-md-6 pull-right text-right">
+          <small>Модел: </small>{{ advertDetails.model }}</h4>
       </div>
       <div class="row col-md-12">
-        <h4 *ngIf="advertDetails.category == AdvertCategory.Car" class="col-md-6">Каросерија: {{ advertDetails.body }}</h4>
-        <h4 *ngIf="advertDetails.category == AdvertCategory.Mobile" class="col-md-6">Меморија: {{ advertDetails.memory }}</h4>
-        <h4 class="col-md-6 pull-right text-right">Боја: {{ advertDetails.color }}</h4>
+        <h4 *ngIf="advertDetails.category == AdvertCategory.Car" class="col-md-6">
+          <small>Каросерија: </small>{{ advertDetails.body }}</h4>
+        <h4 *ngIf="advertDetails.category == AdvertCategory.Mobile" class="col-md-6">
+          <small>Меморија: </small>{{ advertDetails.memory }}</h4>
+        <h4 class="col-md-6 pull-right text-right">
+          <small>Боја: </small>{{ advertDetails.color }}</h4>
       </div>
       <div *ngIf="advertDetails.category == AdvertCategory.Car" class="row col-md-12">
-        <h4 class="col-md-6">Година производство: {{ advertDetails.year }}</h4>
-        <h4 class="col-md-6 pull-right text-right">Поминати километри: {{ advertDetails.kmTraveled }}</h4>
+        <h4 class="col-md-6">
+          <small>Година производство: </small>{{ advertDetails.year }}</h4>
+        <h4 class="col-md-6 pull-right text-right">
+          <small>Поминати километри: </small>{{ advertDetails.kmTraveled }}</h4>
       </div>
       <div class="row col-md-12">
-        <h4 class="col-md-9">Објавено: {{ advertDetails.createdOn | amCalendar }}</h4>
-        <h4 class="col-md-3 pull-right text-right">Тип: {{ getTypeText(advertDetails.type) }}</h4>
+        <h4 class="col-md-9">
+          <small>Објавено: </small>{{ advertDetails.createdOn | amCalendar }}</h4>
+        <h4 class="col-md-3 pull-right text-right">
+          <small>Тип: </small>{{ getTypeText(advertDetails.type) }}</h4>
       </div>
       <hr />
 

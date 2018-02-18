@@ -9,6 +9,18 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ProfileComponent implements OnInit {
 
+  public cities = [
+    { value: 'bt', viewValue: 'Битола' },
+    { value: 'sk', viewValue: 'Скопје' },
+    { value: 'ku', viewValue: 'Куманово' },
+    { value: 'te', viewValue: 'Тетово' },
+    { value: 'pp', viewValue: 'Прилеп' },
+    { value: 've', viewValue: 'Велес' }
+  ];
+
+  public hide = true;
+  public hideRepeated = true;
+
   constructor(private apiService: ApiService,
   private tokenService: TokenService) { }
 
