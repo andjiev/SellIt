@@ -10,7 +10,7 @@ namespace SellIt.Models.Advertisement
 
         public string Title { get; set; }
 
-        public AdvertisementCategory Category { get; set; }
+        public int Category { get; set; }
 
         public int? Price { get; set; }
 

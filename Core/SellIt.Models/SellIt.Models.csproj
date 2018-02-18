@@ -48,9 +48,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Advertisement\AdvertisementCategory.cs" />
+    <Compile Include="Advertisement\AdvertisementDetails.cs" />
     <Compile Include="Advertisement\AdvertisementDto.cs" />
     <Compile Include="Advertisement\AdvertisementRequest.cs" />
-    <Compile Include="Advertisement\CarAdvertisementDto.cs" />
     <Compile Include="Advertisement\CarAdvertisementRequest.cs" />
     <Compile Include="Advertisement\MobileAdvertisementRequest.cs" />
     <Compile Include="CurrentUser\CurrentUser.cs" />

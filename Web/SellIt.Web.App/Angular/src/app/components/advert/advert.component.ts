@@ -1,3 +1,4 @@
+import { Router } from '@angular/router';
 import { IAdvertisementCategory } from './../../models/enums';
 import { IAdvertisementDto } from './../../models/models';
 import { ApiService } from './../../services/api.service';
@@ -45,7 +46,8 @@ export class AdvertComponent implements OnInit, OnDestroy {
   public isLoading = true;
 
   constructor(private apiService: ApiService,
-    private formBuilder: FormBuilder) {
+    private formBuilder: FormBuilder,
+    private router: Router) {
     this.filterGroup = formBuilder.group({
       search: [''],
       category: ['0'],
@@ -113,6 +115,10 @@ export class AdvertComponent implements OnInit, OnDestroy {
     this.filterGroup.controls.search.setValue('');
     this.filterGroup.controls.category.setValue('0');
     this.filterGroup.controls.city.setValue('0');
+  }
+
+  navigateToDetails(advertUid: string): void {
+    this.router.navigate(['adverts', advertUid]);
   }
 
   ngOnDestroy() {

@@ -1,4 +1,4 @@
-<nav class="navbar sticky-top navbar-inverse navbar-expand-lg bg-dark">
+<nav class="navbar navbar-inverse navbar-expand-lg bg-dark">
     <div class="container col header-container">
 
         <div class="navbar-translate">
@@ -24,7 +24,7 @@
                         Нов оглас
                     </a>
                 </li>
-                <li *ngIf="!isLoggedIn()">
+                <li *ngIf="!isLoggedIn()" class="nav-item">
                     <a class="nav-link cursor-pointer" (click)="navigateToLogin()">
                         Најава
                     </a>

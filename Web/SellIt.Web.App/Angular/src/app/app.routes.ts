@@ -30,7 +30,7 @@ export const ROUTES: Routes = [
                 canActivate: [AuthGuardService]
             },
             {
-                path: 'adverts/details',
+                path: 'adverts/:uid',
                 component: AdvertDetailsComponent
             },
             {

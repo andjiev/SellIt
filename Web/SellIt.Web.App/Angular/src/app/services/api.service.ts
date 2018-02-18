@@ -3,7 +3,8 @@ import {
     ICreateUserRequest, ILoginUserRequest,
     IUserDto, IMobileAdvertisementRequest,
     IAdvertisementRequest, ICarAdvertisementRequest,
-    IAdvertisementDto
+    IAdvertisementDto,
+    IAdvertisementDetails
 } from './../models/models';
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
@@ -44,6 +45,16 @@ export class ApiService {
     getAdverts(): Observable<IAdvertisementDto[]> {
         const url = this.getUrl('advertisements');
         return this.httpService.get<IAdvertisementDto[]>(url);
+    }
+
+    getAdvertDetails(advertUid: string): Observable<IAdvertisementDetails> {
+        const url = this.getUrl(`advertisements/${advertUid}`);
+        return this.httpService.get<IAdvertisementDetails>(url);
+    }
+
+    deleteAdvert(advertUid: string): Observable<any> {
+        const url = this.getUrl(`advertisements/${advertUid}`);
+        return this.httpService.delete<Observable<any>>(url, { headers: this.getJwtHeader() });
     }
 
     private getUrl(query: string): string {

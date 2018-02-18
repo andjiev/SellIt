@@ -29,6 +29,15 @@ namespace SellIt.Web.API.Controllers
             return response;
         }
 
+        [HttpGet]
+        [Route("{advertUid:guid}")]
+        [AllowAnonymous]
+        public async Task<AdvertisementDetails> GetAdvertisementDetails([FromUri]Guid advertUid)
+        {
+            AdvertisementDetails response = await _advertisementService.GetAdvertisementDetails(advertUid);
+            return response;
+        }
+
         [HttpPost]
         [Route("car")]
         [CustomAuthorize]
@@ -43,6 +52,14 @@ namespace SellIt.Web.API.Controllers
         public async Task CreateMobileAdvertisement([FromBody]MobileAdvertisementRequest request)
         {
             await _advertisementService.CreateMobileAdvertisement(request);
+        }
+
+        [HttpDelete]
+        [Route("{advertUid:guid}")]
+        [CustomAuthorize]
+        public async Task DeleteAdvertisement([FromUri] Guid advertUid)
+        {
+            await _advertisementService.DeleteAdvertisement(advertUid);
         }
     }
 }

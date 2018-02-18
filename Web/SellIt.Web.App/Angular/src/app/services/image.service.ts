@@ -11,7 +11,7 @@ export class ImageService {
     }
 
     public getBase64Images(): string[] {
-        return this.images.map(x => x.icon.split(',')[1]);
+        return this.images ? this.images.map(x => x.icon.split(',')[1]) : [];
     }
 
     private getBase64(input: any): any {

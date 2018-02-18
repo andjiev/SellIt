@@ -1,71 +1,103 @@
-<div class="">
-  <button class="btn btn-round btn-rose" (click)="navigateToList()">Назад</button>
+<div class="row">
+  <div class="col-md-6">
+    <button class="btn btn-round btn-rose" (click)="navigateToList()">Назад</button>
+  </div>
+  <div class="col-md-6">
+    <button class="btn btn-round btn-rose pull-right" data-toggle="modal" data-target="#myModal">Избриши</button>
+  </div>
 </div>
 
+<div *ngIf="!isLoading" class="main">
+  <div class="row">
 
-  <div class="main">
-    <div class="row">
-
-      <div class="col-md-6 col-sm-6">
-        <ngx-gallery style="padding: 60px;" [options]="galleryOptions" [images]="galleryImages"></ngx-gallery>
+    <div class="col-md-6 col-sm-6 align-middle">
+      <ngx-gallery *ngIf="galleryImages.length > 0" style="padding: 30px;" [options]="galleryOptions" [images]="galleryImages"></ngx-gallery>
+      <div *ngIf="galleryImages.length == 0" class="text-center mt-5">
+        <img src="assets/img/no_image.png" class="mt-5" width="80%" height="80%">
       </div>
-      <div class="col-md-6 col-sm-6">
-        <div class="col-md-12">
-          <h2 class="title text-primary"> Наслов </h2>
-        </div>
-
-        <div class="row col-md-12">
-          <h3 class="col col-md-6">Цена: 335ден</h3>
-          <h3 class="main-price col-md-6 pull-right">Категорија: Автомобил</h3>
-        </div>
-
-
-
-        <hr />
-
-
-        <div class="col-md-12 mt-5" style="height: 380px">
-          It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.
-          The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using
-          'Content here, content here', making it look like readable English. Many desktop publishing packages and web page
-          editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites
-          still in their infancy. V arious versions have evolved over the years, sometimes by accident, sometime s on purpose
-          (injected humour and the like).
-
-        </div>
-
-        <hr />
-
-        <div class="row col-md-12 mb-4">
-          <div class="col-md-4">
-            <mat-icon class="text-primary align-middle">face</mat-icon>
-            <span>Перо</span>
-          </div>
-          <div class="col-md-4 text-center">
-            <mat-icon class="text-primary align-middle">location_city</mat-icon>
-            <span>Битола</span>
-          </div>
-          <div class="col-md-4 text-right">
-            <mat-icon class="text-primary align-middle">phone</mat-icon>
-            <span>078/285-716</span>
-          </div>
-
-
-        </div>
-
-
-
-
-
-
-
-
-      </div>
-
-
     </div>
 
 
+    <div class="col-md-6 col-sm-6">
+
+      <div class="col-md-12">
+        <h3 class="text-primary"> {{ advertDetails.title }} </h3>
+      </div>
+      <hr />
+
+      <div class="row col-md-12">
+        <h4 class="col-md-6">Цена: {{ advertDetails.price ? (advertDetails.price | currency:'MKD ') : 'По договор' }}</h4>
+        <h4 class="col-md-6 pull-right text-right">Категорија: {{ getCategoryText(advertDetails.category) }}</h4>
+      </div>
+      <div class="row col-md-12">
+        <h4 class="col-md-6">Марка: {{ advertDetails.brand }}</h4>
+        <h4 class="col-md-6 pull-right text-right">Модел: {{ advertDetails.model }}</h4>
+      </div>
+      <div class="row col-md-12">
+        <h4 *ngIf="advertDetails.category == AdvertCategory.Car" class="col-md-6">Каросерија: {{ advertDetails.body }}</h4>
+        <h4 *ngIf="advertDetails.category == AdvertCategory.Mobile" class="col-md-6">Меморија: {{ advertDetails.memory }}</h4>
+        <h4 class="col-md-6 pull-right text-right">Боја: {{ advertDetails.color }}</h4>
+      </div>
+      <div *ngIf="advertDetails.category == AdvertCategory.Car" class="row col-md-12">
+        <h4 class="col-md-6">Година производство: {{ advertDetails.year }}</h4>
+        <h4 class="col-md-6 pull-right text-right">Поминати километри: {{ advertDetails.kmTraveled }}</h4>
+      </div>
+      <div class="row col-md-12">
+        <h4 class="col-md-9">Објавено: {{ advertDetails.createdOn | amCalendar }}</h4>
+        <h4 class="col-md-3 pull-right text-right">Тип: {{ getTypeText(advertDetails.type) }}</h4>
+      </div>
+      <hr />
+
+      <div class="col-md-12 mt-4" style="height: 260px">
+        {{ advertDetails.description }}
+      </div>
+      <hr />
+
+      <div class="row col-md-12 mb-4">
+        <div class="col-md-4">
+          <mat-icon class="text-primary align-middle">face</mat-icon>
+          <span>{{ advertDetails.name }}</span>
+        </div>
+        <div class="col-md-4 text-center">
+          <mat-icon class="text-primary align-middle">location_city</mat-icon>
+          <span>{{ advertDetails.location }}</span>
+        </div>
+        <div class="col-md-4 text-right">
+          <mat-icon class="text-primary align-middle">phone</mat-icon>
+          <span>{{ advertDetails.phone }}</span>
+        </div>
+      </div>
+
+    </div>
   </div>
+</div>
 
-
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" style="display: none;" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Избриши оглас</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <i class="material-icons">clear</i>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>Дали сте сигурни дека сакате да го избришите огласот?</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-link" #dissmissModal data-dismiss="modal">Не
+          <div class="ripple-container"></div>
+        </button>
+        <button type="button" class="btn btn-danger btn-link" (click)="deleteAdvert()">Да
+          <div class="ripple-container">
+            <div class="ripple-decorator ripple-on ripple-out" style="left: 38.5781px; top: 21px; background-color: rgb(244, 67, 54); transform: scale(8.50976);"></div>
+            <div class="ripple-decorator ripple-on ripple-out" style="left: 38.5781px; top: 21px; background-color: rgb(244, 67, 54); transform: scale(8.50976);"></div>
+            <div class="ripple-decorator ripple-on ripple-out" style="left: 38.5781px; top: 21px; background-color: rgb(244, 67, 54); transform: scale(8.50976);"></div>
+            <div class="ripple-decorator ripple-on ripple-out" style="left: 38.5781px; top: 21px; background-color: rgb(244, 67, 54); transform: scale(8.50976);"></div>
+            <div class="ripple-decorator ripple-on ripple-out" style="left: 38.5781px; top: 21px; background-color: rgb(244, 67, 54); transform: scale(8.50976);"></div>
+          </div>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

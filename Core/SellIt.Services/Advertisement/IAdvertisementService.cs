@@ -1,6 +1,7 @@
 ﻿namespace SellIt.Services.Advertisement
 {
     using SellIt.Models.Advertisement;
+    using System;
     using System.Collections.Generic;
     using System.Threading.Tasks;
 
@@ -8,8 +9,12 @@
     {
         Task<List<AdvertisementDto>> GetAllActiveAdvertisements();
 
+        Task<AdvertisementDetails> GetAdvertisementDetails(Guid advertUid);
+
         Task CreateCarAdvertisement(CarAdvertisementRequest request);
 
         Task CreateMobileAdvertisement(MobileAdvertisementRequest request);
+
+        Task DeleteAdvertisement(Guid advertUid);
     }
 }
