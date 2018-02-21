@@ -35,6 +35,7 @@ export class AdvertCreationComponent implements OnInit, OnDestroy {
   }
 
   public onRemove(event: any) {
+    this.inputFileModel = this.inputFileModel.filter(x => x !== event);
     this.imageService.setImages(this.inputFileModel);
   }
 

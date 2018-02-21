@@ -123,6 +123,7 @@ export class AdvertComponent implements OnInit, OnDestroy {
     this.filterGroup.controls.search.setValue('');
     this.filterGroup.controls.category.setValue('0');
     this.filterGroup.controls.city.setValue('0');
+    this.paginator.pageIndex = 0;
   }
 
   navigateToDetails(advertUid: string): void {

@@ -59,6 +59,11 @@ export class AdvertMobileComponent implements OnDestroy {
           this.router.navigate(['adverts']);
         },
         error => {
+          switch (error.status) {
+            default:
+              this.notificationService.error('Грешка', 'Проблем со серверот');
+              break;
+          }
           this.isLoading = false;
         }
       );
