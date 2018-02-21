@@ -73,3 +73,15 @@ export interface IAdvertisementDetails {
     kmTraveled?: number;
     base64Images: string[];
 }
+
+export interface IUpdateUserProfileRequest {
+    name: string;
+    email: string;
+    city: string;
+    phone: string;
+}
+
+export interface IUpdateUserPasswordRequest {
+    currentPassword: string;
+    newPassword: string;
+}

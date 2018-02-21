@@ -9,6 +9,7 @@
     using SellIt.Data;
     using SellIt.Models.Advertisement;
     using SellIt.Models.CurrentUser;
+    using SellIt.Models.Exceptions;
 
     public class AdvertisementService : IAdvertisementService
     {
@@ -58,7 +59,7 @@
 
             if (advert == null)
             {
-                throw new Exception();
+                throw new NotFoundException();
             }
 
             switch ((AdvertisementCategory)advert.Category)
@@ -85,7 +86,7 @@
 
             if (currentUser == null)
             {
-                throw new Exception();
+                throw new NotFoundException();
             }
 
             CarAdvertisement carAdvertisement = new CarAdvertisement
@@ -127,7 +128,7 @@
 
             if (currentUser == null)
             {
-                throw new Exception();
+                throw new NotFoundException();
             }
 
             MobileAdvertisement mobileAdvertisement = new MobileAdvertisement
@@ -168,14 +169,14 @@
 
             if (advertisement == null)
             {
-                throw new Exception();
+                throw new NotFoundException();
             }
 
             CurrentUser currentUser = MemoryCache.Default["currentUser"] as CurrentUser;
 
             if (currentUser.Id != advertisement.User.Id)
             {
-                throw new Exception();
+                throw new BadRequestException();
             }
 
             _unitOfWork.Advertisements.Delete(advertisement);

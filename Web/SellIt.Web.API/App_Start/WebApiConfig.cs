@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json.Serialization;
+using SellIt.Web.API.App_Start;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,6 +14,7 @@ namespace SellIt.Web.API
         public static void Register(HttpConfiguration config)
         {
             // Web API configuration and services
+            config.Filters.Add(new CustomExceptionFilterAttribute());
 
             // Web API routes
             config.MapHttpAttributeRoutes();

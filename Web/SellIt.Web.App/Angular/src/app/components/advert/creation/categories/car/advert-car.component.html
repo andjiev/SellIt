@@ -38,7 +38,7 @@
             </mat-form-field>
 
             <mat-form-field class="col-md-12 mt-3">
-                <textarea rows="8" matInput placeholder="Опис" formControlName="description" required></textarea>
+                <textarea rows="8" [maxlength]="250" matInput placeholder="Опис" formControlName="description" required></textarea>
             </mat-form-field>
 
             <mat-form-field class="col-md-6 mt-3">

@@ -1,3 +1,4 @@
+import { NotificationsService } from 'angular2-notifications';
 import { Router } from '@angular/router';
 import { IAdvertisementCategory } from './../../models/enums';
 import { IAdvertisementDto } from './../../models/models';
@@ -47,7 +48,8 @@ export class AdvertComponent implements OnInit, OnDestroy {
 
   constructor(private apiService: ApiService,
     private formBuilder: FormBuilder,
-    private router: Router) {
+    private router: Router,
+    private notificationService: NotificationsService) {
     this.filterGroup = formBuilder.group({
       search: [''],
       category: ['0'],
@@ -94,9 +96,15 @@ export class AdvertComponent implements OnInit, OnDestroy {
           length: this.filteredAdverts.data.length
         };
         this.filteredAdverts.paginator = this.paginator;
-        this.isLoading = false;
       },
       error => {
+        switch (error.status) {
+          default:
+            this.notificationService.error('Грешка', 'Проблем со серверот');
+            break;
+        }
+      },
+      () => {
         this.isLoading = false;
       }
     );

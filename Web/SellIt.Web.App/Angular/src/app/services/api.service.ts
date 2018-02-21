@@ -4,7 +4,9 @@ import {
     IUserDto, IMobileAdvertisementRequest,
     IAdvertisementRequest, ICarAdvertisementRequest,
     IAdvertisementDto,
-    IAdvertisementDetails
+    IAdvertisementDetails,
+    IUpdateUserProfileRequest,
+    IUpdateUserPasswordRequest
 } from './../models/models';
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
@@ -30,6 +32,16 @@ export class ApiService {
     getUserDetails(): Observable<IUserDto> {
         const url = this.getUrl('users');
         return this.httpService.get<IUserDto>(url, { headers: this.getJwtHeader() });
+    }
+
+    updateUserProfile(request: IUpdateUserProfileRequest): Observable<any> {
+        const url = this.getUrl('users');
+        return this.httpService.patch<any>(url, request, { headers: this.getJwtHeader() });
+    }
+
+    updateUserPassword(request: IUpdateUserPasswordRequest): Observable<any> {
+        const url = this.getUrl('users/password');
+        return this.httpService.patch<any>(url, request, { headers: this.getJwtHeader() });
     }
 
     createMobileAdvert(request: IMobileAdvertisementRequest): Observable<any> {

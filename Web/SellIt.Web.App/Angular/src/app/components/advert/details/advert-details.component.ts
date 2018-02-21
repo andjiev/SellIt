@@ -72,8 +72,15 @@ export class AdvertDetailsComponent implements OnInit {
           this.router.navigate(['adverts']);
         },
         error => {
+          switch (error.status) {
+            case 400:
+              this.notificationService.error('Грешка', 'Огласот не е ваш');
+              break;
+            default:
+              this.notificationService.error('Грешка', 'Проблем со серверот');
+              break;
+          }
           this.dissmissModal.nativeElement.click();
-          this.notificationService.error('Грешка', 'Огласот не е ваш');
         }
       );
     }

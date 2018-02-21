@@ -68,9 +68,17 @@ export class ProfileLoginComponent {
       this.apiService.loginUser(request).subscribe(
         response => {
           this.tokenService.setToken(response);
-          this.router.navigate(['/profile']);
+          this.router.navigate(['adverts']);
         },
         error => {
+          switch (error.status) {
+            case 404:
+              this.notificationService.error('Грешка', 'Неточна лозинка или емаил');
+              break;
+            default:
+              this.notificationService.error('Грешка', 'Проблем со серверот');
+              break;
+          }
           this.isLoading = false;
         }
       );
@@ -99,9 +107,17 @@ export class ProfileLoginComponent {
         response => {
           this.notificationService.success('Успешно', 'Успешна регистрација');
           this.tokenService.setToken(response);
-          this.router.navigate(['/profile']);
+          this.router.navigate(['adverts']);
         },
         error => {
+          switch (error.status) {
+            case 400:
+              this.notificationService.error('Грешка', 'Емаилот веќе е регистриран');
+              break;
+            default:
+              this.notificationService.error('Грешка', 'Проблем со серверот');
+              break;
+          }
           this.isLoading = false;
          }
       );

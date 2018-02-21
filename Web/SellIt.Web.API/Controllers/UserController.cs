@@ -34,16 +34,32 @@ namespace SellIt.Web.API.Controllers
         [HttpPost]
         [Route("")]
         [AllowAnonymous]
-        public async Task<string> CreateUser([FromBody]CreateUserRequest request)
+        public async Task<string> CreateUser([FromBody] CreateUserRequest request)
         {
             string authToken = await _userService.CreateUser(request);
             return authToken;
-        }        
+        } 
+        
+        [HttpPatch]
+        [Route("")]
+        [CustomAuthorize]
+        public async Task UpdateUserProfile([FromBody] UpdateUserProfileRequest request)
+        {
+            await _userService.UpdateUserProfile(request);
+        }
+
+        [HttpPatch]
+        [Route("password")]
+        [CustomAuthorize]
+        public async Task UpdateUserPassword([FromBody] UpdateUserPasswordRequest request)
+        {
+            await _userService.UpdateUserPassword(request);
+        }
 
         [HttpPost]
         [Route("login")]
         [AllowAnonymous]
-        public async Task<string> LoginUser([FromBody]LoginUserRequest request)
+        public async Task<string> LoginUser([FromBody] LoginUserRequest request)
         {
             string authToken = await _userService.LoginUser(request);
             return authToken;

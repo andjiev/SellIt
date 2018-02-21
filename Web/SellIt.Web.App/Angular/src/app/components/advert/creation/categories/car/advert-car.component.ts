@@ -26,15 +26,15 @@ export class AdvertCarComponent implements OnDestroy {
         private imageService: ImageService) {
 
         this.advertForm = formBuilder.group({
-            title: ['', [Validators.required]],
+            title: ['', [Validators.required, Validators.minLength(5)]],
             type: ['1', [Validators.required]],
-            brand: ['', [Validators.required]],
-            model: ['', [Validators.required]],
-            color: ['', [Validators.required]],
-            body: ['', [Validators.required]],
-            year: ['', [Validators.required]],
-            kmTraveled: ['', [Validators.required]],
-            description: ['', [Validators.required]],
+            brand: ['', [Validators.required, Validators.minLength(3)]],
+            model: ['', [Validators.required, Validators.minLength(1)]],
+            color: ['', [Validators.required, Validators.minLength(3)]],
+            body: ['', [Validators.required, Validators.minLength(4)]],
+            year: ['', [Validators.required, Validators.minLength(4)]],
+            kmTraveled: ['', [Validators.required, Validators.minLength(2)]],
+            description: ['', [Validators.required, Validators.minLength(10)]],
             price: ['', [Validators.required]]
         });
     }

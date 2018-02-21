@@ -25,13 +25,13 @@ export class AdvertMobileComponent implements OnDestroy {
     private imageService: ImageService) {
 
     this.advertForm = formBuilder.group({
-      title: ['', [Validators.required]],
+      title: ['', [Validators.required, Validators.minLength(5)]],
       type: ['1', [Validators.required]],
-      brand: ['', [Validators.required]],
-      model: ['', [Validators.required]],
-      color: ['', [Validators.required]],
+      brand: ['', [Validators.required, Validators.minLength(3)]],
+      model: ['', [Validators.required, Validators.minLength(1)]],
+      color: ['', [Validators.required, Validators.minLength(3)]],
       memory: ['', [Validators.required]],
-      description: ['', [Validators.required]],
+      description: ['', [Validators.required, Validators.minLength(10)]],
       price: ['', [Validators.required]]
     });
   }

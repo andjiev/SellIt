@@ -7,10 +7,14 @@
 
     public interface IUserService
     {
-        Task<string> CreateUser(CreateUserRequest request);
-
         Task<UserDto> GetUserData();
 
+        Task<string> CreateUser(CreateUserRequest request);        
+
         Task<string> LoginUser(LoginUserRequest request);
+
+        Task UpdateUserProfile(UpdateUserProfileRequest request);
+
+        Task UpdateUserPassword(UpdateUserPasswordRequest request);
     }
 }

@@ -3,6 +3,7 @@
     using Microsoft.IdentityModel.Tokens;
     using SellIt.Data;
     using SellIt.Models.CurrentUser;
+    using SellIt.Models.Exceptions;
     using SellIt.Models.User;
     using System;
     using System.Collections.Generic;
@@ -13,6 +14,7 @@
     using System.Security.Claims;
     using System.Text;
     using System.Threading.Tasks;
+    using System.Web;
 
     public class UserService : IUserService
     {
@@ -22,9 +24,33 @@
         {
             _unitOfWork = unitOfWork;
         }
+        public async Task<UserDto> GetUserData()
+        {
+            CurrentUser currentUser = MemoryCache.Default[$"currentUser"] as CurrentUser;
+
+            UserDto userDto = await _unitOfWork.Users.All()
+                .Where(x => x.Uid == currentUser.Uid)
+                .Select(s => new UserDto
+                {
+                    Name = s.Name,
+                    City = s.City,
+                    CreatedOn = s.CreatedOn,
+                    Email = s.Email,
+                    Phone = s.Phone
+                }).FirstOrDefaultAsync();
+
+            return userDto;
+        }
 
         public async Task<string> CreateUser(CreateUserRequest request)
         {
+            bool userEmailExists = _unitOfWork.Users.All().Any(x => x.Email == request.Email);
+
+            if (userEmailExists)
+            {
+                throw new BadRequestException();
+            }
+
             User user = new User
             {
                 Uid = Guid.NewGuid(),
@@ -42,24 +68,6 @@
             return GenerateTokenForUser(user.Uid);
         }
 
-        public async Task<UserDto> GetUserData()
-        {
-            CurrentUser currentUser = MemoryCache.Default[$"currentUser"] as CurrentUser;
-
-            UserDto userDto = await _unitOfWork.Users.All()
-                .Where(x => x.Uid == currentUser.Uid)
-                .Select(s => new UserDto
-                {
-                    Name = s.Name,
-                    City = s.City,
-                    CreatedOn = s.CreatedOn,
-                    Email = s.Email,
-                    Phone = s.Phone
-                }).FirstOrDefaultAsync();
-
-            return userDto;
-        }      
-
         public async Task<string> LoginUser(LoginUserRequest request)
         {
             User user = await _unitOfWork.Users.All()
@@ -67,10 +75,62 @@
 
             if (user == null)
             {
-                throw new Exception();
+                throw new NotFoundException();
             }
 
-            return GenerateTokenForUser(user.Uid);      
+            return GenerateTokenForUser(user.Uid);
+        }
+
+        public async Task UpdateUserProfile(UpdateUserProfileRequest request)
+        {
+            CurrentUser currentUser = MemoryCache.Default[$"currentUser"] as CurrentUser;
+
+            User user = await _unitOfWork.Users.All()
+                .FirstOrDefaultAsync(x => x.Id == currentUser.Id);
+
+            if (user == null)
+            {
+                throw new NotFoundException();
+            }
+
+            bool userEmailExists = _unitOfWork.Users.All()
+                .Any(x => x.Email == request.Email && x.Id != user.Id);
+
+            if (userEmailExists)
+            {
+                throw new BadRequestException();
+            }
+
+            user.Name = request.Name;
+            user.Email = request.Email;
+            user.City = request.City;
+            user.Phone = request.Phone;
+
+            _unitOfWork.Users.Update(user);
+            await _unitOfWork.SaveAsync();
+        }
+
+        public async Task UpdateUserPassword(UpdateUserPasswordRequest request)
+        {
+            CurrentUser currentUser = MemoryCache.Default[$"currentUser"] as CurrentUser;
+
+            User user = await _unitOfWork.Users.All()
+                .FirstOrDefaultAsync(x => x.Id == currentUser.Id);
+
+            if (user == null)
+            {
+                throw new NotFoundException();
+            }
+
+            if (user.Password != request.CurrentPassword)
+            {
+                throw new BadRequestException();
+            }
+
+            user.Password = request.NewPassword;
+
+            _unitOfWork.Users.Update(user);
+            await _unitOfWork.SaveAsync();
         }
 
         private string GenerateTokenForUser(Guid userUid)
