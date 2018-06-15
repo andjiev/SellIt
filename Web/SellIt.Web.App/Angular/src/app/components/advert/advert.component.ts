@@ -1,3 +1,4 @@
+import { CommonVariables } from './../../utils/commonVariables';
 import { NotificationsService } from 'angular2-notifications';
 import { Router } from '@angular/router';
 import { IAdvertisementCategory } from './../../models/enums';
@@ -18,27 +19,13 @@ import 'rxjs/add/operator/debounceTime';
 export class AdvertComponent implements OnInit, OnDestroy {
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
-  categories = [
-    { value: '0', viewValue: 'Сите' },
-    { value: '1', viewValue: 'Автомобил' },
-    { value: '2', viewValue: 'Телефон' }
-  ];
-
-  cities = [
-    { value: '0', viewValue: 'Сите' },
-    { value: '1', viewValue: 'Битола' },
-    { value: '2', viewValue: 'Скопје' },
-    { value: '3', viewValue: 'Куманово' },
-    { value: '4', viewValue: 'Тетово' },
-    { value: '5', viewValue: 'Прилеп' },
-    { value: '6', viewValue: 'Велес' }
-  ];
-
   private advertSubscription: Subscription;
   private searchChangeSubscription: Subscription;
   private categoryChangeSubscription: Subscription;
   private cityChangeSubscription: Subscription;
 
+  public categories = CommonVariables.categories;
+  public cities = CommonVariables.cities;
   public filteredAdverts = new MatTableDataSource<IAdvertisementDto>();
   public advertsData: IAdvertisementDto[];
   public filterGroup: FormGroup;

@@ -83,7 +83,7 @@
 
         public async Task UpdateUserProfile(UpdateUserProfileRequest request)
         {
-            CurrentUser currentUser = MemoryCache.Default[$"currentUser"] as CurrentUser;
+            CurrentUser currentUser = MemoryCache.Default["currentUser"] as CurrentUser;
 
             User user = await _unitOfWork.Users.All()
                 .FirstOrDefaultAsync(x => x.Id == currentUser.Id);
@@ -112,7 +112,7 @@
 
         public async Task UpdateUserPassword(UpdateUserPasswordRequest request)
         {
-            CurrentUser currentUser = MemoryCache.Default[$"currentUser"] as CurrentUser;
+            CurrentUser currentUser = MemoryCache.Default["currentUser"] as CurrentUser;
 
             User user = await _unitOfWork.Users.All()
                 .FirstOrDefaultAsync(x => x.Id == currentUser.Id);

@@ -4,6 +4,8 @@ using SellIt.Web.API.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
+using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Http;
@@ -19,7 +21,7 @@ namespace SellIt.Web.API.Controllers
         {
             _advertisementService = advertisementService;
         }
-        
+
         [HttpGet]
         [Route("")]
         [AllowAnonymous]
@@ -41,25 +43,28 @@ namespace SellIt.Web.API.Controllers
         [HttpPost]
         [Route("car")]
         [CustomAuthorize]
-        public async Task CreateCarAdvertisement([FromBody]CarAdvertisementRequest request)
+        public async Task<HttpResponseMessage> CreateCarAdvertisement([FromBody]CarAdvertisementRequest request)
         {
             await _advertisementService.CreateCarAdvertisement(request);
+            return new HttpResponseMessage(HttpStatusCode.OK);
         }
 
         [HttpPost]
         [Route("mobile")]
         [CustomAuthorize]
-        public async Task CreateMobileAdvertisement([FromBody]MobileAdvertisementRequest request)
+        public async Task<HttpResponseMessage> CreateMobileAdvertisement([FromBody]MobileAdvertisementRequest request)
         {
             await _advertisementService.CreateMobileAdvertisement(request);
+            return new HttpResponseMessage(HttpStatusCode.OK);
         }
 
         [HttpDelete]
         [Route("{advertUid:guid}")]
         [CustomAuthorize]
-        public async Task DeleteAdvertisement([FromUri] Guid advertUid)
+        public async Task<HttpResponseMessage> DeleteAdvertisement([FromUri] Guid advertUid)
         {
             await _advertisementService.DeleteAdvertisement(advertUid);
+            return new HttpResponseMessage(HttpStatusCode.OK);
         }
     }
 }

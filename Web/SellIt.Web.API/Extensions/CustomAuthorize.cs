@@ -65,7 +65,7 @@ namespace SellIt.Web.API.Extensions
                 AbsoluteExpiration = DateTimeOffset.Now.AddMinutes(15)
             };
 
-            MemoryCache.Default.Set($"currentUser", currentUser, policy);
+            MemoryCache.Default.Set("currentUser", currentUser, policy);
         }
     }
 }

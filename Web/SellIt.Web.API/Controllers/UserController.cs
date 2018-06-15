@@ -43,17 +43,19 @@ namespace SellIt.Web.API.Controllers
         [HttpPatch]
         [Route("")]
         [CustomAuthorize]
-        public async Task UpdateUserProfile([FromBody] UpdateUserProfileRequest request)
+        public async Task<HttpResponseMessage> UpdateUserProfile([FromBody] UpdateUserProfileRequest request)
         {
             await _userService.UpdateUserProfile(request);
+            return new HttpResponseMessage(HttpStatusCode.OK);
         }
 
         [HttpPatch]
         [Route("password")]
         [CustomAuthorize]
-        public async Task UpdateUserPassword([FromBody] UpdateUserPasswordRequest request)
+        public async Task<HttpResponseMessage> UpdateUserPassword([FromBody] UpdateUserPasswordRequest request)
         {
             await _userService.UpdateUserPassword(request);
+            return new HttpResponseMessage(HttpStatusCode.OK);
         }
 
         [HttpPost]
