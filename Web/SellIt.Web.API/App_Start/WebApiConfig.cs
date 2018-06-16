@@ -19,7 +19,7 @@ namespace SellIt.Web.API
             // Web API routes
             config.MapHttpAttributeRoutes();
 
-            EnableCorsAttribute cors = new EnableCorsAttribute("http://localhost:4200", "*", "*");
+            EnableCorsAttribute cors = new EnableCorsAttribute("http://localhost:4200", "*", "*") { SupportsCredentials = true };
             config.EnableCors(cors);
 
             config.Routes.MapHttpRoute(
@@ -30,6 +30,8 @@ namespace SellIt.Web.API
 
             config.Formatters.JsonFormatter.SupportedMediaTypes
                 .Add(new MediaTypeHeaderValue("text/html"));
+            config.Formatters.XmlFormatter.SupportedMediaTypes
+                .Add(new MediaTypeHeaderValue("multipart/form-data"));
 
             config.Formatters.JsonFormatter.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
         }

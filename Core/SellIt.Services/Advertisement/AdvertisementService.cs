@@ -3,9 +3,12 @@
     using System;
     using System.Collections.Generic;
     using System.Data.Entity;
+    using System.IO;
     using System.Linq;
     using System.Runtime.Caching;
     using System.Threading.Tasks;
+    using System.Web;
+    using Newtonsoft.Json;
     using SellIt.Data;
     using SellIt.Models.Advertisement;
     using SellIt.Models.CurrentUser;
@@ -80,7 +83,7 @@
             return advertisementDetails;
         }
 
-        public async Task CreateCarAdvertisement(CarAdvertisementRequest request)
+        public async Task CreateCarAdvertisement(HttpRequest request)
         {
             CurrentUser currentUser = MemoryCache.Default["currentUser"] as CurrentUser;
 
@@ -88,6 +91,14 @@
             {
                 throw new NotFoundException();
             }
+
+            if (request.Files.Count == 0 || string.IsNullOrEmpty(request.Form["model"]))
+            {
+                throw new BadRequestException();
+            }
+
+            string modelValue = request.Form["model"];
+            CarAdvertisementRequest model = JsonConvert.DeserializeObject<CarAdvertisementRequest>(modelValue);
 
             CarAdvertisement carAdvertisement = new CarAdvertisement
             {
@@ -97,32 +108,35 @@
                     CreatedOn = DateTime.Now,
                     Category = (int)AdvertisementCategory.Car,
                     UserFk = currentUser.Id,
-                    Title = request.Title,
-                    Type = request.Type,
-                    Description = request.Description,
-                    Price = request.Price
+                    Title = model.Title,
+                    Type = model.Type,
+                    Description = model.Description,
+                    Price = model.Price
                 },
-                Brand = request.Brand,
-                Model = request.Model,
-                Body = request.Body,
-                Color = request.Color,
-                Year = request.Year,
-                KmTraveled = request.KmTraveled
+                Brand = model.Brand,
+                Model = model.Model,
+                Body = model.Body,
+                Color = model.Color,
+                Year = model.Year,
+                KmTraveled = model.KmTraveled
             };
 
-            foreach (string base64Image in request.Base64Images)
+            for (int i = 0; i < request.Files.Count; ++i)
             {
-                carAdvertisement.Advertisement.AdvertisementImages.Add(new AdvertisementImage
+                using (BinaryReader binaryReader = new BinaryReader(request.Files[i].InputStream))
                 {
-                    ImageContent = Convert.FromBase64String(base64Image)
-                });
+                    carAdvertisement.Advertisement.AdvertisementImages.Add(new AdvertisementImage
+                    {
+                        ImageContent = binaryReader.ReadBytes(request.Files[i].ContentLength)
+                    });
+                }
             }
 
             _unitOfWork.CarAdvertisements.Insert(carAdvertisement);
             await _unitOfWork.SaveAsync();
         }
 
-        public async Task CreateMobileAdvertisement(MobileAdvertisementRequest request)
+        public async Task CreateMobileAdvertisement(HttpRequest request)
         {
             CurrentUser currentUser = MemoryCache.Default["currentUser"] as CurrentUser;
 
@@ -130,6 +144,14 @@
             {
                 throw new NotFoundException();
             }
+
+            if (request.Files.Count == 0 || string.IsNullOrEmpty(request.Form["model"]))
+            {
+                throw new BadRequestException();
+            }
+
+            string modelValue = request.Form["model"];
+            MobileAdvertisementRequest model = JsonConvert.DeserializeObject<MobileAdvertisementRequest>(modelValue);
 
             MobileAdvertisement mobileAdvertisement = new MobileAdvertisement
             {
@@ -139,23 +161,26 @@
                     CreatedOn = DateTime.Now,
                     Category = (int)AdvertisementCategory.Mobile,
                     UserFk = currentUser.Id,
-                    Title = request.Title,
-                    Type = request.Type,
-                    Description = request.Description,
-                    Price = request.Price
+                    Title = model.Title,
+                    Type = model.Type,
+                    Description = model.Description,
+                    Price = model.Price
                 },
-                Brand = request.Brand,
-                Model = request.Model,
-                Memory = request.Memory,
-                Color = request.Color
+                Brand = model.Brand,
+                Model = model.Model,
+                Memory = model.Memory,
+                Color = model.Color
             };
 
-            foreach (string base64Image in request.Base64Images)
+            for (int i = 0; i < request.Files.Count; ++i)
             {
-                mobileAdvertisement.Advertisement.AdvertisementImages.Add(new AdvertisementImage
+                using (BinaryReader binaryReader = new BinaryReader(request.Files[i].InputStream))
                 {
-                    ImageContent = Convert.FromBase64String(base64Image)
-                });
+                    mobileAdvertisement.Advertisement.AdvertisementImages.Add(new AdvertisementImage
+                    {
+                        ImageContent = binaryReader.ReadBytes(request.Files[i].ContentLength)
+                    });
+                }
             }
 
             _unitOfWork.MobileAdvertisements.Insert(mobileAdvertisement);

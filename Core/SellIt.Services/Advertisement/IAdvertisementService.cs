@@ -4,6 +4,7 @@
     using System;
     using System.Collections.Generic;
     using System.Threading.Tasks;
+    using System.Web;
 
     public interface IAdvertisementService
     {
@@ -11,9 +12,9 @@
 
         Task<AdvertisementDetails> GetAdvertisementDetails(Guid advertUid);
 
-        Task CreateCarAdvertisement(CarAdvertisementRequest request);
+        Task CreateCarAdvertisement(HttpRequest request);
 
-        Task CreateMobileAdvertisement(MobileAdvertisementRequest request);
+        Task CreateMobileAdvertisement(HttpRequest request);
 
         Task DeleteAdvertisement(Guid advertUid);
     }

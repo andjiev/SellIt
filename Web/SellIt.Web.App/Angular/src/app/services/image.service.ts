@@ -10,8 +10,8 @@ export class ImageService {
         this.images = images;
     }
 
-    public getBase64Images(): string[] {
-        return this.images ? this.images.map(x => x.icon.split(',')[1]) : [];
+    public getImages(): any[] {
+        return this.images;
     }
 
     private getBase64(input: any): any {

@@ -3,6 +3,7 @@ using SellIt.Services.Advertisement;
 using SellIt.Web.API.Extensions;
 using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -43,18 +44,18 @@ namespace SellIt.Web.API.Controllers
         [HttpPost]
         [Route("car")]
         [CustomAuthorize]
-        public async Task<HttpResponseMessage> CreateCarAdvertisement([FromBody]CarAdvertisementRequest request)
+        public async Task<HttpResponseMessage> CreateCarAdvertisement()
         {
-            await _advertisementService.CreateCarAdvertisement(request);
+            await _advertisementService.CreateCarAdvertisement(HttpContext.Current.Request);
             return new HttpResponseMessage(HttpStatusCode.OK);
         }
 
         [HttpPost]
         [Route("mobile")]
         [CustomAuthorize]
-        public async Task<HttpResponseMessage> CreateMobileAdvertisement([FromBody]MobileAdvertisementRequest request)
+        public async Task<HttpResponseMessage> CreateMobileAdvertisement()
         {
-            await _advertisementService.CreateMobileAdvertisement(request);
+            await _advertisementService.CreateMobileAdvertisement(HttpContext.Current.Request);
             return new HttpResponseMessage(HttpStatusCode.OK);
         }
 

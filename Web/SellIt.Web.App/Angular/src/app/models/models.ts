@@ -25,7 +25,6 @@ export interface IAdvertisementRequest {
     type: number;
     description: string;
     price?: number;
-    base64Images: string[];
 }
 
 export interface IMobileAdvertisementRequest extends IAdvertisementRequest {

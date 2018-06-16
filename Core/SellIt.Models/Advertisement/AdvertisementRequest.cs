@@ -9,13 +9,8 @@ namespace SellIt.Models.Advertisement
     public class AdvertisementRequest 
     {
         public string Title { get; set; } 
-
         public int Type { get; set; }
-
         public string Description { get; set; }
-
         public int? Price { get; set; }
-
-        public List<string> Base64Images { get; set; }
     }
 }

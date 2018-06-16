@@ -44,12 +44,12 @@ export class ApiService {
         return this.httpService.patch<any>(url, request, { headers: this.getJwtHeader() });
     }
 
-    createMobileAdvert(request: IMobileAdvertisementRequest): Observable<any> {
+    createMobileAdvert(request: FormData): Observable<any> {
         const url = this.getUrl('advertisements/mobile');
         return this.httpService.post<any>(url, request, { headers: this.getJwtHeader() });
     }
 
-    createCarAdvert(request: ICarAdvertisementRequest): Observable<any> {
+    createCarAdvert(request: FormData): Observable<any> {
         const url = this.getUrl('advertisements/car');
         return this.httpService.post<any>(url, request, { headers: this.getJwtHeader() });
     }
@@ -67,7 +67,7 @@ export class ApiService {
     deleteAdvert(advertUid: string): Observable<any> {
         const url = this.getUrl(`advertisements/${advertUid}`);
         return this.httpService.delete<Observable<any>>(url, { headers: this.getJwtHeader() });
-    }
+    }    
 
     private getUrl(query: string): string {
         return `${environment.apiUrl}/${query}`;
