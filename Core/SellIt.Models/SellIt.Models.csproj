@@ -53,6 +53,8 @@
     <Compile Include="Advertisement\AdvertisementRequest.cs" />
     <Compile Include="Advertisement\CarAdvertisementRequest.cs" />
     <Compile Include="Advertisement\MobileAdvertisementRequest.cs" />
+    <Compile Include="Common\ListResult.cs" />
+    <Compile Include="Common\Paging.cs" />
     <Compile Include="CurrentUser\CurrentUser.cs" />
     <Compile Include="Exceptions\BadRequestException.cs" />
     <Compile Include="Exceptions\NotFoundException.cs" />

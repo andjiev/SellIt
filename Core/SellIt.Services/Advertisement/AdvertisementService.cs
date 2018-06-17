@@ -11,6 +11,7 @@
     using Newtonsoft.Json;
     using SellIt.Data;
     using SellIt.Models.Advertisement;
+    using SellIt.Models.Common;
     using SellIt.Models.CurrentUser;
     using SellIt.Models.Exceptions;
 
@@ -23,10 +24,17 @@
             _unitOfWork = unitOfWork;
         }
 
-        public async Task<List<AdvertisementDto>> GetAllActiveAdvertisements()
+        public async Task<ListResultDto<AdvertisementDto>> GetAllActiveAdvertisements(Paging paging)
         {
-            List<AdvertisementDto> advertisements = await _unitOfWork.Advertisements.All()
+            List<Advertisement> advertisements = await _unitOfWork.Advertisements.All()
+                .Where(w => (paging.Category == 0 || w.Category == paging.Category) &&
+                    (string.IsNullOrEmpty(paging.SearchString) || w.Title.Contains(paging.SearchString)) &&
+                    (string.IsNullOrEmpty(paging.Location) || w.User.City.Contains(paging.Location))).ToListAsync();
+
+            List<AdvertisementDto> filteredAdvertisements = advertisements
                 .OrderByDescending(x => x.CreatedOn)
+                .Skip((paging.Page - 1) * paging.PageSize)
+                .Take(paging.PageSize)
                 .Select(x => new AdvertisementDto
                 {
                     Uid = x.Uid,
@@ -35,22 +43,28 @@
                     Category = x.Category,
                     Price = x.Price,
                     Location = x.User.City
-                }).ToListAsync();
+                }).ToList();
 
-
-            List<AdvertisementImage> advertImages = await _unitOfWork.AdvertisementImages.All().ToListAsync();
-
-            foreach (AdvertisementDto advertDto in advertisements)
+            if (filteredAdvertisements.Any())
             {
-                AdvertisementImage image = advertImages.FirstOrDefault(x => x.Advertisement.Uid == advertDto.Uid);
+                List<AdvertisementImage> advertImages = await _unitOfWork.AdvertisementImages.All().ToListAsync();
 
-                if (image != null)
+                foreach (AdvertisementDto advertDto in filteredAdvertisements)
                 {
-                    advertDto.base64Image = Convert.ToBase64String(image.ImageContent);
+                    AdvertisementImage image = advertImages.FirstOrDefault(x => x.Advertisement.Uid == advertDto.Uid);
+
+                    if (image != null)
+                    {
+                        advertDto.base64Image = Convert.ToBase64String(image.ImageContent);
+                    }
                 }
             }
 
-            return advertisements;
+            return new ListResultDto<AdvertisementDto>()
+            {
+                List = filteredAdvertisements,
+                TotalCount = advertisements.Count
+            };
         }
 
         public async Task<AdvertisementDetails> GetAdvertisementDetails(Guid advertUid)

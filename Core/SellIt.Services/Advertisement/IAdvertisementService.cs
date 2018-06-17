@@ -1,6 +1,7 @@
 ﻿namespace SellIt.Services.Advertisement
 {
     using SellIt.Models.Advertisement;
+    using SellIt.Models.Common;
     using System;
     using System.Collections.Generic;
     using System.Threading.Tasks;
@@ -8,7 +9,7 @@
 
     public interface IAdvertisementService
     {
-        Task<List<AdvertisementDto>> GetAllActiveAdvertisements();
+        Task<ListResultDto<AdvertisementDto>> GetAllActiveAdvertisements(Paging paging);
 
         Task<AdvertisementDetails> GetAdvertisementDetails(Guid advertUid);
 

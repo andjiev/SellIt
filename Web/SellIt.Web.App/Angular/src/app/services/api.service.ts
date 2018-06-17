@@ -6,7 +6,8 @@ import {
     IAdvertisementDto,
     IAdvertisementDetails,
     IUpdateUserProfileRequest,
-    IUpdateUserPasswordRequest
+    IUpdateUserPasswordRequest,
+    IListResultDto
 } from './../models/models';
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
@@ -54,9 +55,10 @@ export class ApiService {
         return this.httpService.post<any>(url, request, { headers: this.getJwtHeader() });
     }
 
-    getAdverts(): Observable<IAdvertisementDto[]> {
-        const url = this.getUrl('advertisements');
-        return this.httpService.get<IAdvertisementDto[]>(url);
+    getAdverts(paging: any): Observable<IListResultDto<IAdvertisementDto[]>> {
+        console.log(paging);
+        const url = this.getUrl(`advertisements?page=${paging.page}&pageSize=${paging.pageSize}&category=${paging.category}&searchString=${paging.searchString}&location=${paging.location}`);
+        return this.httpService.get<IListResultDto<IAdvertisementDto[]>>(url);
     }
 
     getAdvertDetails(advertUid: string): Observable<IAdvertisementDetails> {
@@ -67,7 +69,7 @@ export class ApiService {
     deleteAdvert(advertUid: string): Observable<any> {
         const url = this.getUrl(`advertisements/${advertUid}`);
         return this.httpService.delete<Observable<any>>(url, { headers: this.getJwtHeader() });
-    }    
+    }
 
     private getUrl(query: string): string {
         return `${environment.apiUrl}/${query}`;

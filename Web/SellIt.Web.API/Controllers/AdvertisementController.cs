@@ -1,4 +1,5 @@
 ﻿using SellIt.Models.Advertisement;
+using SellIt.Models.Common;
 using SellIt.Services.Advertisement;
 using SellIt.Web.API.Extensions;
 using System;
@@ -26,9 +27,10 @@ namespace SellIt.Web.API.Controllers
         [HttpGet]
         [Route("")]
         [AllowAnonymous]
-        public async Task<List<AdvertisementDto>> GetAllActiveAdvertisements()
+        public async Task<ListResultDto<AdvertisementDto>> GetAllActiveAdvertisements(int? page, int? pageSize, int? category, string searchString, string location)
         {
-            List<AdvertisementDto> response = await _advertisementService.GetAllActiveAdvertisements();
+            Paging paging = new Paging(page, pageSize, category, searchString, location);
+            ListResultDto<AdvertisementDto> response = await _advertisementService.GetAllActiveAdvertisements(paging);
             return response;
         }
 

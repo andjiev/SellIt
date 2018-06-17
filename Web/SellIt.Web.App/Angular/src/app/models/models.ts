@@ -84,3 +84,16 @@ export interface IUpdateUserPasswordRequest {
     currentPassword: string;
     newPassword: string;
 }
+
+export interface IListResultDto<T> {
+    list: any;
+    totalCount: number;
+}
+
+export interface IPaging {
+    page: number;
+    pageSize: number;
+    category: number;
+    searchString: string;
+    location: string;
+}
