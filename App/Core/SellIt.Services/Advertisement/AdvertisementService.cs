@@ -106,7 +106,7 @@
                 throw new NotFoundException();
             }
 
-            if (request.Files.Count == 0 || string.IsNullOrEmpty(request.Form["model"]))
+            if (string.IsNullOrEmpty(request.Form["model"]))
             {
                 throw new BadRequestException();
             }
@@ -159,7 +159,7 @@
                 throw new NotFoundException();
             }
 
-            if (request.Files.Count == 0 || string.IsNullOrEmpty(request.Form["model"]))
+            if (string.IsNullOrEmpty(request.Form["model"]))
             {
                 throw new BadRequestException();
             }
