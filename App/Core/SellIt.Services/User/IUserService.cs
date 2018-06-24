@@ -1,7 +1,6 @@
 ﻿namespace SellIt.Services.User
 {
     using SellIt.Models.User;
-    using System;
     using System.Collections.Generic;
     using System.Threading.Tasks;
 
@@ -9,12 +8,16 @@
     {
         Task<UserDto> GetUserData();
 
-        Task<string> CreateUser(CreateUserRequest request);        
+        Task<List<UserDto>> GetAllUserDetails();
 
-        Task<string> LoginUser(LoginUserRequest request);
+        Task<UserManagerDto> CreateUser(CreateUserRequest request);        
+
+        Task<UserManagerDto> LoginUser(LoginUserRequest request);
 
         Task UpdateUserProfile(UpdateUserProfileRequest request);
 
         Task UpdateUserPassword(UpdateUserPasswordRequest request);
+
+        Task UpdateUserRole(UpdateUserRoleRequest request);
     }
 }

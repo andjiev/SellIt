@@ -12,7 +12,7 @@
         <AssociationConnector Association="SellItModel.FK_AdvertisementImage_Advertisement" />
         <AssociationConnector Association="SellItModel.FK_CarAdvertisement_Advertisement" />
         <AssociationConnector Association="SellItModel.FK_PhoneAdvertisement_Advertisement" />
-        <EntityTypeShape EntityType="SellItModel.User" Width="1.5" PointX="0.75" PointY="4.125" />
+        <EntityTypeShape EntityType="SellItModel.User" Width="1.5" PointX="0.75" PointY="3.875" />
         <AssociationConnector Association="SellItModel.FK_Advertisement_User" />
       </Diagram>
     </edmx:Diagrams>

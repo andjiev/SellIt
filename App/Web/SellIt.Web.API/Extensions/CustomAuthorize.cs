@@ -1,5 +1,6 @@
 ﻿using SellIt.Data;
 using SellIt.Models.CurrentUser;
+using SellIt.Models.User;
 using System;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
@@ -37,7 +38,7 @@ namespace SellIt.Web.API.Extensions
 
             Claim tokenClaim = token.Claims.FirstOrDefault();
 
-            if(tokenClaim == null)
+            if (tokenClaim == null)
             {
                 actionContext.Response = new HttpResponseMessage(HttpStatusCode.Unauthorized);
                 return;
@@ -50,11 +51,11 @@ namespace SellIt.Web.API.Extensions
                 .Select(s => new CurrentUser
                 {
                     Id = s.Id,
-                    Uid = s.Uid
-                })
-                .FirstOrDefault();
+                    Uid = s.Uid,
+                    Role = s.Role
+                }).FirstOrDefault();
 
-            if(currentUser == null)
+            if (currentUser == null || (!string.IsNullOrEmpty(Roles) && !Roles.Contains(((UserRole)currentUser.Role).ToString())))
             {
                 actionContext.Response = new HttpResponseMessage(HttpStatusCode.Unauthorized);
                 return;

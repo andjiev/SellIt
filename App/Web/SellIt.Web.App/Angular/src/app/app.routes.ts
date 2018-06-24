@@ -1,3 +1,4 @@
+import { UserSettingsComponent } from './components/settings/user-settings.component';
 import { AdvertCategoryComponent } from './components/advert/creation/advert-category.component';
 import { AdvertCreationComponent } from './components/advert/creation/advert-creation.component';
 import { AdvertDetailsComponent } from './components/advert/details/advert-details.component';
@@ -40,6 +41,11 @@ export const ROUTES: Routes = [
             {
                 path: 'profile',
                 component: ProfileComponent,
+                canActivate: [AuthGuardService]
+            },
+            {
+                path: 'settings',
+                component: UserSettingsComponent,
                 canActivate: [AuthGuardService]
             }
         ]

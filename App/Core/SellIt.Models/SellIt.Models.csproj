@@ -63,7 +63,10 @@
     <Compile Include="User\LoginUserRequest.cs" />
     <Compile Include="User\UpdateUserPasswordRequest.cs" />
     <Compile Include="User\UpdateUserProfileRequest.cs" />
+    <Compile Include="User\UpdateUserRoleRequest.cs" />
     <Compile Include="User\UserDto.cs" />
+    <Compile Include="User\UserManagerDto.cs" />
+    <Compile Include="User\UserRole.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

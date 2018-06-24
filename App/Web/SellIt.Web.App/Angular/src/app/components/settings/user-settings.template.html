@@ -1,0 +1,34 @@
+<div class="row pt-5">
+    <div class="col-md-5 col-sm-6 ml-auto mr-auto">
+        <div class="card">
+            <div class="card-header card-header-info text-center">
+                <h4>Подесувања за корисник</h4>
+            </div>
+            <div class="card-body mt-3" style="position: relative">
+                <ngx-loading [show]="isLoading"></ngx-loading>
+
+                <div [formGroup]="formGroup" style="padding-left: 160px; padding-right: 160px">
+                    <mat-form-field>
+                        <mat-select placeholder="Емаил" formControlName="email">
+                            <mat-option *ngFor="let email of emails" [value]="email">
+                                {{ email }}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+
+                    <mat-form-field>
+                        <mat-select placeholder="Улога" formControlName="role">
+                            <mat-option *ngFor="let role of roles" [(value)]="role.value">
+                                {{ role.viewValue }}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+
+                    <div class="col-md-12 mt-3 text-center">
+                        <button class="btn btn-link btn-rose" (click)="updateUserSettings()">Зачувај</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

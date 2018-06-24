@@ -1,6 +1,6 @@
 import { ICarAdvertisementRequest } from './../../../../../models/models';
 import { ApiService } from './../../../../../services/api.service';
-import { Subscription } from 'rxjs';
+import { Subscription } from 'rxjs/Subscription';
 import { Router } from '@angular/router';
 import { Component, OnDestroy } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -13,7 +13,6 @@ import { ImageService } from '../../../../../services/image.service';
     styleUrls: ['./advert-car.component.css']
 })
 export class AdvertCarComponent implements OnDestroy {
-
     private submitFormSubscription: Subscription;
 
     public advertForm: FormGroup;
@@ -34,7 +33,7 @@ export class AdvertCarComponent implements OnDestroy {
             body: ['', [Validators.required, Validators.minLength(4)]],
             year: ['', [Validators.required, Validators.minLength(4)]],
             kmTraveled: ['', [Validators.required, Validators.minLength(2)]],
-            description: ['', [Validators.required, Validators.minLength(10)]],
+            description: ['', [Validators.required]],
             price: ['', [Validators.required]]
         });
     }
@@ -100,5 +99,6 @@ export class AdvertCarComponent implements OnDestroy {
         if (this.submitFormSubscription) {
             this.submitFormSubscription.unsubscribe();
         }
+        this.imageService.clearImages();
     }
 }

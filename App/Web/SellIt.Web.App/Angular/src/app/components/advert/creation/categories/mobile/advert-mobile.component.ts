@@ -2,7 +2,7 @@ import { IMobileAdvertisementRequest } from './../../../../../models/models';
 import { ApiService } from './../../../../../services/api.service';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs/Subscription';
-import { Component, OnDestroy, Input, SimpleChanges, OnChanges } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { NotificationsService } from 'angular2-notifications';
 import { ImageService } from '../../../../../services/image.service';
@@ -31,7 +31,7 @@ export class AdvertMobileComponent implements OnDestroy {
             model: ['', [Validators.required, Validators.minLength(1)]],
             color: ['', [Validators.required, Validators.minLength(3)]],
             memory: ['', [Validators.required]],
-            description: ['', [Validators.required, Validators.minLength(10)]],
+            description: ['', [Validators.required]],
             price: ['', [Validators.required]]
         });
     }
@@ -95,5 +95,6 @@ export class AdvertMobileComponent implements OnDestroy {
         if (this.submitFormSubscription) {
             this.submitFormSubscription.unsubscribe();
         }
+        this.imageService.clearImages();
     }
 }

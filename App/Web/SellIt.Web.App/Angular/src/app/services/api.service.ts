@@ -1,33 +1,39 @@
 import { AuthService } from './auth.service';
 import {
-    ICreateUserRequest, ILoginUserRequest,
-    IUserDto, IMobileAdvertisementRequest,
-    IAdvertisementRequest, ICarAdvertisementRequest,
+    ICreateUserRequest,
+    ILoginUserRequest,
+    IUserDto,
     IAdvertisementDto,
     IAdvertisementDetails,
     IUpdateUserProfileRequest,
     IUpdateUserPasswordRequest,
-    IListResultDto
+    IListResultDto,
+    IUserManagerDto,
+    IUpdateUserSettingsRequest
 } from './../models/models';
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 import { environment } from '../../environments/environment';
-import { RequestOptions } from '@angular/http';
 
 @Injectable()
 export class ApiService {
     constructor(private httpService: HttpClient,
         private authService: AuthService) { }
 
-    createUser(request: ICreateUserRequest): Observable<string> {
+    createUser(request: ICreateUserRequest): Observable<IUserManagerDto> {
         const url = this.getUrl('users');
-        return this.httpService.post<string>(url, request);
+        return this.httpService.post<IUserManagerDto>(url, request);
     }
 
-    loginUser(request: ILoginUserRequest): Observable<string> {
+    loginUser(request: ILoginUserRequest): Observable<IUserManagerDto> {
         const url = this.getUrl('users/login');
-        return this.httpService.post<string>(url, request);
+        return this.httpService.post<IUserManagerDto>(url, request);
+    }
+
+    getAllUserDetails(): Observable<IUserDto[]> {
+        const url = this.getUrl('users/details');
+        return this.httpService.get<IUserDto[]>(url, { headers: this.getJwtHeader() });
     }
 
     getUserDetails(): Observable<IUserDto> {
@@ -42,6 +48,11 @@ export class ApiService {
 
     updateUserPassword(request: IUpdateUserPasswordRequest): Observable<any> {
         const url = this.getUrl('users/password');
+        return this.httpService.patch<any>(url, request, { headers: this.getJwtHeader() });
+    }
+
+    updateUserSettings(request: IUpdateUserSettingsRequest): Observable<any> {
+        const url = this.getUrl('users/settings');
         return this.httpService.patch<any>(url, request, { headers: this.getJwtHeader() });
     }
 

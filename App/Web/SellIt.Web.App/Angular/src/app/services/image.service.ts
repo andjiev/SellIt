@@ -14,6 +14,10 @@ export class ImageService {
         return this.images;
     }
 
+    public clearImages(): void {
+        this.images = [];
+    }
+
     private getBase64(input: any): any {
         const fileReader = new FileReader();
 

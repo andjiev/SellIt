@@ -24,6 +24,7 @@
         {
             _unitOfWork = unitOfWork;
         }
+
         public async Task<UserDto> GetUserData()
         {
             CurrentUser currentUser = MemoryCache.Default[$"currentUser"] as CurrentUser;
@@ -42,7 +43,22 @@
             return userDto;
         }
 
-        public async Task<string> CreateUser(CreateUserRequest request)
+        public async Task<List<UserDto>> GetAllUserDetails()
+        {
+            List<UserDto> users = await _unitOfWork.Users.All()
+               .Select(s => new UserDto
+               {
+                   Name = s.Name,
+                   City = s.City,
+                   CreatedOn = s.CreatedOn,
+                   Email = s.Email,
+                   Phone = s.Phone
+               }).ToListAsync();
+
+            return users;
+        }
+
+        public async Task<UserManagerDto> CreateUser(CreateUserRequest request)
         {
             bool userEmailExists = _unitOfWork.Users.All().Any(x => x.Email == request.Email);
 
@@ -59,16 +75,23 @@
                 Email = request.Email,
                 Password = request.Password,
                 City = request.City,
-                Phone = request.Phone
+                Phone = request.Phone,
+                Role = (int)UserRole.User
             };
 
             _unitOfWork.Users.Insert(user);
             await _unitOfWork.SaveAsync();
 
-            return GenerateTokenForUser(user.Uid);
+            string authToken = GenerateTokenForUser(user.Uid);
+
+            return new UserManagerDto
+            {
+                AuthToken = authToken,
+                Role = user.Role
+            };
         }
 
-        public async Task<string> LoginUser(LoginUserRequest request)
+        public async Task<UserManagerDto> LoginUser(LoginUserRequest request)
         {
             User user = await _unitOfWork.Users.All()
                  .FirstOrDefaultAsync(x => x.Email == request.Email && x.Password == request.Password);
@@ -77,8 +100,13 @@
             {
                 throw new NotFoundException();
             }
+            string authToken = GenerateTokenForUser(user.Uid);
 
-            return GenerateTokenForUser(user.Uid);
+            return new UserManagerDto
+            {
+                AuthToken = authToken,
+                Role = user.Role
+            };
         }
 
         public async Task UpdateUserProfile(UpdateUserProfileRequest request)
@@ -128,6 +156,21 @@
             }
 
             user.Password = request.NewPassword;
+
+            _unitOfWork.Users.Update(user);
+            await _unitOfWork.SaveAsync();
+        }
+
+        public async Task UpdateUserRole(UpdateUserRoleRequest request)
+        {
+            User user = await _unitOfWork.Users.All()
+                .FirstOrDefaultAsync(w => w.Email == request.Email);
+
+            if (user == null)
+            {
+                throw new NotFoundException();
+            }
+            user.Role = request.Role;
 
             _unitOfWork.Users.Update(user);
             await _unitOfWork.SaveAsync();

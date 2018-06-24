@@ -63,7 +63,7 @@ namespace SellIt.Web.API.Controllers
 
         [HttpDelete]
         [Route("{advertUid:guid}")]
-        [CustomAuthorize]
+        [CustomAuthorize(Roles = "Administrator")]
         public async Task<HttpResponseMessage> DeleteAdvertisement([FromUri] Guid advertUid)
         {
             await _advertisementService.DeleteAdvertisement(advertUid);

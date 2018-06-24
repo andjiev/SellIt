@@ -34,12 +34,12 @@ namespace SellIt.Web.API.Controllers
         [HttpPost]
         [Route("")]
         [AllowAnonymous]
-        public async Task<string> CreateUser([FromBody] CreateUserRequest request)
+        public async Task<UserManagerDto> CreateUser([FromBody] CreateUserRequest request)
         {
-            string authToken = await _userService.CreateUser(request);
-            return authToken;
-        } 
-        
+            UserManagerDto userManager = await _userService.CreateUser(request);
+            return userManager;
+        }
+
         [HttpPatch]
         [Route("")]
         [CustomAuthorize]
@@ -47,6 +47,24 @@ namespace SellIt.Web.API.Controllers
         {
             await _userService.UpdateUserProfile(request);
             return new HttpResponseMessage(HttpStatusCode.OK);
+        }
+
+        [HttpGet]
+        [Route("details")]
+        [CustomAuthorize(Roles = "Administrator")]
+        public async Task<List<UserDto>> GetAllUserDetails()
+        {
+            List<UserDto> users = await _userService.GetAllUserDetails();
+            return users;
+        }
+
+        [HttpPost]
+        [Route("login")]
+        [AllowAnonymous]
+        public async Task<UserManagerDto> LoginUser([FromBody] LoginUserRequest request)
+        {
+            UserManagerDto userManager = await _userService.LoginUser(request);
+            return userManager;
         }
 
         [HttpPatch]
@@ -58,13 +76,13 @@ namespace SellIt.Web.API.Controllers
             return new HttpResponseMessage(HttpStatusCode.OK);
         }
 
-        [HttpPost]
-        [Route("login")]
-        [AllowAnonymous]
-        public async Task<string> LoginUser([FromBody] LoginUserRequest request)
+        [HttpPatch]
+        [Route("settings")]
+        [CustomAuthorize(Roles = "Administrator")]
+        public async Task<HttpResponseMessage> UpdateUserRole([FromBody] UpdateUserRoleRequest request)
         {
-            string authToken = await _userService.LoginUser(request);
-            return authToken;
+            await _userService.UpdateUserRole(request);
+            return new HttpResponseMessage(HttpStatusCode.OK);
         }
     }
 }

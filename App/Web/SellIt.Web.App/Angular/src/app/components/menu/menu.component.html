@@ -14,6 +14,11 @@
 
         <div class="collapse navbar-collapse">
             <ul class="navbar-nav ml-auto">
+                <li class="nav-item" *ngIf="role === IUserRole.Administrator">
+                    <a class="nav-link cursor-pointer" (click)="navigateToRoleSettings()">
+                        Додади улога
+                    </a>
+                </li>
                 <li class="nav-item">
                     <a class="nav-link cursor-pointer" (click)="navigateToAdverts()">
                         Сите огласи

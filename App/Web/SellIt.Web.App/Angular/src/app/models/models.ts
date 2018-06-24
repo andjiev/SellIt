@@ -1,4 +1,4 @@
-import { IAdvertisementCategory, IAdvertisementType } from './enums';
+import { IAdvertisementCategory, IAdvertisementType, IUserRole } from './enums';
 
 export interface ILoginUserRequest {
     email: string;
@@ -85,6 +85,11 @@ export interface IUpdateUserPasswordRequest {
     newPassword: string;
 }
 
+export interface IUpdateUserSettingsRequest {
+    email: string;
+    role: number;
+}
+
 export interface IListResultDto<T> {
     list: any;
     totalCount: number;
@@ -96,4 +101,9 @@ export interface IPaging {
     category: number;
     searchString: string;
     location: string;
+}
+
+export interface IUserManagerDto {
+    authToken: string;
+    role: IUserRole;
 }

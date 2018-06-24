@@ -211,13 +211,6 @@
                 throw new NotFoundException();
             }
 
-            CurrentUser currentUser = MemoryCache.Default["currentUser"] as CurrentUser;
-
-            if (currentUser.Id != advertisement.User.Id)
-            {
-                throw new BadRequestException();
-            }
-
             _unitOfWork.Advertisements.Delete(advertisement);
             await _unitOfWork.SaveAsync();
         }

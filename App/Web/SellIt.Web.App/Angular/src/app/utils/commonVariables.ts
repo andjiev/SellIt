@@ -14,4 +14,9 @@ export class CommonVariables {
         { value: '5', viewValue: 'Прилеп' },
         { value: '6', viewValue: 'Велес' }
     ];
+
+    static roles = [
+        { value: '1', viewValue: 'Администратор' },
+        { value: '2', viewValue: 'Корисник' }
+    ];
 }

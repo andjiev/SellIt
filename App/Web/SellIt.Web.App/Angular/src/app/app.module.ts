@@ -1,3 +1,4 @@
+import { UserSettingsComponent } from './components/settings/user-settings.component';
 import { AdvertCarComponent } from './components/advert/creation/categories/car/advert-car.component';
 import { AdvertMobileComponent } from './components/advert/creation/categories/mobile/advert-mobile.component';
 import { AdvertDetailsComponent } from './components/advert/details/advert-details.component';
@@ -42,7 +43,8 @@ import { ImageService } from './services/image.service';
     ProfileLoginComponent,
     AdvertMobileComponent,
     AdvertCategoryComponent,
-    AdvertCarComponent
+    AdvertCarComponent,
+    UserSettingsComponent
   ],
   imports: [
     BrowserModule,

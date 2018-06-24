@@ -4,14 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SellIt.Models.CurrentUser
+namespace SellIt.Models.User
 {
-    public class CurrentUser
+    public class UpdateUserRoleRequest
     {
-        public int Id { get; set; }
-
-        public Guid Uid { get; set; }
-
+        public string Email { get; set; }
         public int Role { get; set; }
     }
 }
